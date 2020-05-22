@@ -1,27 +1,70 @@
-# MkdataAngularProject
+# MK Data Front-End Project
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.5.
+Esse é o projeto Front-End para o desafio do MK Data. Aqui escreverei o meu processo de desenvolvimento
+com alguns detalhes sobre o projeto.
 
-## Development server
+## Executar
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Para instalar o projeto rode `npm install` na pasta raiz, e logo após rode `ng-serve` para executá-lo.
 
-## Code scaffolding
+## Estrutura do Projeto
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Como primeiro passo, desenhei um esboço da estrutura do projeto, desta forma posso ter uma base de
+como arquitetar os componentes, as rotas e já estruturar o estado da aplicação.
 
-## Build
+```
+    |-- src
+            |-- app
+            |-- core
+                |-- auth
+                |-- header
+            |-- modules
+                |-- clientes
+                    |-- cadastro
+                        |- cadastro.component.ts
+                        |- cadastro.component.html
+                        |- ...
+                    |-- consulta
+                        |- consulta.component.ts
+                        |- consulta.component.html
+                        |- ...
+                    |-- clientes-routes.module.ts
+                    |-- clientes.module.ts
+                    |-- clientes.component.ts
+                    |-- clientes.component.scss
+                    |-- clientes.component.html
+            |-- shared
+                |-- directives
+                |-- components
+                |-- models
+                ...
+            |-- store
+                |-- app.reducers.ts
+        |-- assets
+            |-- img
+            |-- scss
+        |-- environment
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Primeiros Passos
 
-## Running unit tests
+Com a estrutura feita, desenhei um esboço de como cada componente deveria aparecer na tela e como
+dividi-lo em blocos, como com o componente de `consulta`, ele deverá ter um componente filho para pesquisar e
+outro para mostrar os clientes.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Com esse esboço fica mais fácil também entender o estado de cada componente e módulo.
 
-## Running end-to-end tests
+### Step 1: Gerenciamento de Estado
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Para solução de estado, optei por usar o NgRx que é uma implementação do Redux para o Angular. Mesmo que
+a aplicação seja simples, gosto de pensar que um dia ela poderá expandir e ficar mais complexa.
 
-## Further help
+### Step 2: Authenticação
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+TODO
+
+## Ferramentas
+
+* **[Angular](https://angular.io/)** - 9.1.6
+* **[NgRx](https://ngrx.io/)** - 6.5.4
+* **[Angular Material](https://material.angular.io/)** - 9.2.4
