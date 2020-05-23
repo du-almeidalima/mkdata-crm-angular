@@ -22,12 +22,14 @@
     </div>
 
     <!-- User Button -->
-    <div ngbDropdown>
+    <div class="app-header-dropdown" ngbDropdown>
       <button mat-icon-button ngbDropdownToggle id="userMenu" aria-label="User">
         <mat-icon fontSet="fa" fontIcon="fa-user"></mat-icon>
       </button>
-      <div ngbDropdownMenu aria-labelledby="userMenu">
-        <button ngbDropdownItem>Sair</button>
+      <div ngbDropdownMenu
+           class="app-header-dropdown-user"
+           aria-labelledby="userMenu">
+        <button ngbDropdownItem (click)="onLogout()">Sair</button>
       </div>
     </div>
   </div>

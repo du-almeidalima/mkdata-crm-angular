@@ -16,8 +16,12 @@
     color: $gray-200;
   }
 
+  &:active, &:focus {
+    text-decoration: none;
+  }
+
   img {
-    height: 45px;
+    height: 40px;
   }
 }
 
@@ -26,6 +30,7 @@
   flex-flow: row nowrap;
   justify-content: space-between;
   width: 100%;
+  margin-top: 15px;
 
   .app-header-content-link {
     color: $white;
@@ -41,13 +46,24 @@
 @media (min-width: $small) {
   .app-header-brand {
     img {
-      height: 35px;
+      height: 45px;
     }
   }
 
   .app-header-nav {
     flex-flow: row nowrap;
     justify-content: space-between;
-    height: 50px;
+    height: 60px;
+
+    .app-header-content {
+      margin-top: 0;
+    }
+  }
+}
+
+@media (max-width: $tiny) {
+  .app-header-dropdown-user {
+    top: -10px !important;
+    left: -110px !important;
   }
 }
