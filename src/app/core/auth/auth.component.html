@@ -1,1 +1,49 @@
-<p>auth works!</p>
+<div class="row app-login-container">
+  <div class="col-12 col-sm-10 col-md-7 col-lg-5 offset-sm-1 offset-md-3 offset-lg-3">
+    <mat-card>
+      <!-- Header -->
+      <div class="d-flex flex-column flex-nowrap">
+        <h1 class="align-self-center app-login-title">Bem Vindo</h1>
+        <img class="align-self-center mt-4"
+             mat-card-md-image
+             src="http://rathodgroup.in/assets/images/header/user-hero-blue.png"
+             alt = "User Logo">
+      </div>
+      <!-- Content -->
+      <mat-card-content class="mt-4">
+        <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+          <div class="row">
+            <mat-form-field class="col-12 d-block">
+              <mat-label>Usuário</mat-label>
+              <input
+                class="w-100"
+                name="username"
+                ngModel
+                required
+                matInput
+                placeholder="Adalberto">
+            </mat-form-field>
+
+            <mat-form-field class="col-12 d-block">
+              <mat-label>Senha</mat-label>
+              <input
+                class="w-100"
+                name="password"
+                ngModel
+                required
+                matInput
+                placeholder="**********">
+            </mat-form-field>
+          </div>
+
+          <button
+            class="btn-block mt-2"
+            mat-flat-button
+            color="primary"
+            [disabled]="f.invalid && f.touched"
+            type="submit">Login</button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
