@@ -69,4 +69,5 @@ relativamente simples, decidi usar TD - Template Driven forms.
 * **[Angular](https://angular.io/)** - 9.1.6
 * **[NgRx](https://ngrx.io/)** - 6.5.4
 * **[NgRx-Store-Logger](https://www.npmjs.com/package/ngrx-store-logger)** - 0.2.4
+* **[Ng-Bootstrap](https://ng-bootstrap.github.io/)** - 0.2.4
 * **[Angular Material](https://material.angular.io/)** - 9.2.4

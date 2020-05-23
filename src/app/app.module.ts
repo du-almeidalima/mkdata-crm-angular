@@ -10,6 +10,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {environment as env} from '../environments/environment';
 import {CoreModule} from "./core/core.module";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // For Console Logging the State
 function logger(reducer: ActionReducer<any>): any {
@@ -33,7 +34,8 @@ const metaReducers = env.production ? [] : [ logger ];
     StoreModule.forRoot({}, { metaReducers }),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: env.production }),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

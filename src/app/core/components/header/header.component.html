@@ -1,0 +1,34 @@
+<mat-toolbar color="primary" class="app-header-nav">
+
+  <a class="app-header-brand" routerLink="/home">
+    <img src="assets/img/ng-logo.png"
+         alt="Brand Logo">
+    MK CRM
+  </a>
+
+  <div class="app-header-content">
+    <!-- Customer Dropdown Menu-->
+    <div ngbDropdown>
+      <button class="app-header-content-link btn btn-link"
+              type="button"
+              id="customerMenu"
+              ngbDropdownToggle>
+        Clientes
+      </button>
+      <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="customerMenu">
+        <a ngbDropdownItem routerLink="/clientes/cadastro">Cadastro</a>
+        <a ngbDropdownItem routerLink="/clientes">Consulta</a>
+      </div>
+    </div>
+
+    <!-- User Button -->
+    <div ngbDropdown>
+      <button mat-icon-button ngbDropdownToggle id="userMenu" aria-label="User">
+        <mat-icon fontSet="fa" fontIcon="fa-user"></mat-icon>
+      </button>
+      <div ngbDropdownMenu aria-labelledby="userMenu">
+        <button ngbDropdownItem>Sair</button>
+      </div>
+    </div>
+  </div>
+</mat-toolbar>

@@ -1,0 +1,53 @@
+@import "src/styles";
+
+.app-header-nav {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  height: 100px;
+}
+
+.app-header-brand {
+  transition: color 200ms;
+  color: $white;
+  text-decoration: none;
+
+  &:hover {
+    color: $gray-200;
+  }
+
+  img {
+    height: 45px;
+  }
+}
+
+.app-header-content {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  width: 100%;
+
+  .app-header-content-link {
+    color: $white;
+    text-decoration: none;
+  }
+
+  #userMenu::after {
+    content: none;
+  }
+}
+
+// Responsive
+@media (min-width: $small) {
+  .app-header-brand {
+    img {
+      height: 35px;
+    }
+  }
+
+  .app-header-nav {
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    height: 50px;
+  }
+}
