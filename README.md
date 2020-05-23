@@ -59,7 +59,7 @@ Com esse esboço fica mais fácil também entender o estado de cada componente e
 Para solução de estado, optei por usar o NgRx que é uma implementação do Redux para o Angular. Mesmo que
 a aplicação seja simples, gosto de pensar que um dia ela poderá expandir e ficar mais complexa.
 
-### Step 2: Authenticação
+### Step 2: Autenticação
 
 TODO
 
@@ -67,4 +67,5 @@ TODO
 
 * **[Angular](https://angular.io/)** - 9.1.6
 * **[NgRx](https://ngrx.io/)** - 6.5.4
+* **[NgRx-Store-Logger](https://www.npmjs.com/package/ngrx-store-logger)** - 0.2.4
 * **[Angular Material](https://material.angular.io/)** - 9.2.4
