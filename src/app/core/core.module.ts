@@ -11,8 +11,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
 
 const CORE_ROUTES: Routes = [
-  // { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'home', component: HomeComponent},
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: 'home', pathMatch: 'full'}
 ]
 /**

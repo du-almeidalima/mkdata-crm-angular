@@ -26,7 +26,8 @@ const authReducerCreator = createReducer(initialState,
     ...state,
     feedbackMessage: props.message,
     isLoading: false })
-  )
+  ),
+  on(AuthActions.logout, state => ({ ...state, user: null }))
 );
 
 export function authReducer(state: AuthState | undefined, action: Action) {

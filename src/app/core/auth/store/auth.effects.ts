@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {Actions, Effect, ofType} from "@ngrx/effects";
-import {switchMap, tap} from "rxjs/operators";
+import {map, switchMap, tap} from "rxjs/operators";
 import {Observable, of} from "rxjs";
 import {User} from "../../../shared/models/user";
 import {AuthService} from "../auth.service";
@@ -46,16 +46,45 @@ export class AuthEffects {
     })
   );
 
+  @Effect()
+  autoLogin = this.actions$.pipe(
+    ofType(AuthActions.AuthActionsTypes.AutoLogin),
+    map(() => {
+      const restoredUser = this.authService.getUserLocalStorage();
+      if (restoredUser){
+        const {name, username, id, tokenType, _token, _tokenExpirationDate} = restoredUser;
+        const user = new User( name, id, username, tokenType, _token, new Date(_tokenExpirationDate));
+
+        // Checking if token is still valid (check User class)
+        if (user.token){
+          const expirationDuration = (new Date(_tokenExpirationDate).getTime() - new Date().getTime());
+          // Starting Session countdown
+          this.authService.setUserLocalStorage(user, expirationDuration);
+
+          return AuthActions.authenticationSuccess({ user: user, redirect: false });
+        } else {
+          console.info(`User token has expired.`);
+          return { type: 'NULL' }
+        }
+      } else {
+        console.info(`Couldn't find any user to auto login.`);
+        return { type: 'NULL' }
+      }
+    })
+  );
+
+  // Handlers
   private handleAuthenticationSuccess(): Observable<any> {
     const user = new User(
+      'Eduardo Lima',
       '1',
       'Eduardo',
       'Bearer',
       '123',
-      new Date().getTime() + 3600,
+      new Date(new Date().getTime() + 3600000),
     );
 
-    this.authService.setUserLocalStorage(user, new Date().getTime() + 3600);
+    this.authService.setUserLocalStorage(user, new Date().getTime() + 3600000);
     return of(AuthActions.authenticationSuccess({ user, redirect: true }));
   }
 }
