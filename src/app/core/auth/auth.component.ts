@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {NgForm} from "@angular/forms";
+import {Store} from "@ngrx/store";
+import * as AuthActions from './store/auth.actions';
+import * as fromRoot from '../../store/app.state';
 
 @Component({
   selector: 'app-auth',
@@ -8,12 +11,13 @@ import {NgForm} from "@angular/forms";
 })
 export class AuthComponent implements OnInit {
 
-  constructor() { }
+  constructor(private store: Store<fromRoot.AppState>) { }
 
   ngOnInit(): void {
   }
 
   public onSubmit(form: NgForm): void {
-    console.log(form.value);
+    const { username, password } = form.value;
+    this.store.dispatch(AuthActions.startAuthentication({ username, password }))
   }
 }

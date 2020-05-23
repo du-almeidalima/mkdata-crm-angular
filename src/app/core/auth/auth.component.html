@@ -29,6 +29,7 @@
               <input
                 class="w-100"
                 name="password"
+                type="password"
                 ngModel
                 required
                 matInput
@@ -40,7 +41,7 @@
             class="btn-block mt-2"
             mat-flat-button
             color="primary"
-            [disabled]="f.invalid && f.touched"
+            [disabled]="f.untouched || f.invalid"
             type="submit">Login</button>
         </form>
       </mat-card-content>

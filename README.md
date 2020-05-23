@@ -61,7 +61,8 @@ a aplicação seja simples, gosto de pensar que um dia ela poderá expandir e fi
 
 ### Step 2: Autenticação
 
-TODO
+Esta etapa comecei criando o componente de Login, que será o primeiro que o usuário verá. Como é um componente
+relativamente simples, decidi usar TD - Template Driven forms.
 
 ## Ferramentas
 
