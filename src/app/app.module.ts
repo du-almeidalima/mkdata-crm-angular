@@ -32,8 +32,8 @@ const metaReducers = env.production ? [] : [ logger ];
     CoreModule,
     StoreModule.forRoot({}, { metaReducers }),
     EffectsModule.forRoot([]),
-    BrowserAnimationsModule,
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: env.production })
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: env.production }),
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
