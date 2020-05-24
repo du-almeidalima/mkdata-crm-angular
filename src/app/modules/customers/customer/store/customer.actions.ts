@@ -1,6 +1,6 @@
 import {createAction, props} from "@ngrx/store";
 
-export enum AuthActionsTypes {
+export enum CustomerActionTypes {
   FetchCustomer = '[Customers] Fetch Customer',
   SetCustomer = '[Customers] Set Customer',
   CreateCustomer = '[Customers] Create Customer',
@@ -9,8 +9,8 @@ export enum AuthActionsTypes {
 }
 
 // Customer Actions
-export const fetchCustomer = createAction(AuthActionsTypes.FetchCustomer, props<{ }>());
-export const setCustomer = createAction(AuthActionsTypes.SetCustomer, props<{ }>());
-export const createCustomer = createAction(AuthActionsTypes.CreateCustomer, props<{ }>());
-export const deleteCustomer = createAction(AuthActionsTypes.DeleteCustomer, props<{ }>());
-export const updateCustomer = createAction(AuthActionsTypes.UpdateCustomer);
+export const fetchCustomer = createAction(CustomerActionTypes.FetchCustomer, props<{ }>());
+export const setCustomer = createAction(CustomerActionTypes.SetCustomer, props<{ }>());
+export const createCustomer = createAction(CustomerActionTypes.CreateCustomer, props<{ }>());
+export const deleteCustomer = createAction(CustomerActionTypes.DeleteCustomer, props<{ }>());
+export const updateCustomer = createAction(CustomerActionTypes.UpdateCustomer);

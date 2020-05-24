@@ -32,13 +32,12 @@
         <mat-datepicker-toggle matSuffix [for]="registerDate"></mat-datepicker-toggle>
         <mat-datepicker #registerDate></mat-datepicker>
       </mat-form-field>
-
       <!-- Grupos -->
       <mat-form-field class="col-12">
         <mat-label>Grupo</mat-label>
         <mat-select formControlName="group" tabindex="7">
-          <mat-option>
-            Grupo 1
+          <mat-option *ngFor="let group of customerGroups" [value]="group">
+            {{group}}
           </mat-option>
         </mat-select>
       </mat-form-field>

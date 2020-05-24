@@ -1,9 +1,10 @@
 import {Injectable} from "@angular/core";
 import {Actions, Effect, ofType} from "@ngrx/effects";
 import {Store} from "@ngrx/store";
+import {of} from "rxjs";
+import {switchMap, tap} from "rxjs/operators";
 import * as fromCustomer from '../../store';
 import * as CustomerActions from './customer.actions';
-import {tap} from "rxjs/operators";
 
 @Injectable()
 export class CustomerEffect {
@@ -15,9 +16,20 @@ export class CustomerEffect {
 
   @Effect({dispatch: false})
   fetchCustomer = this.actions$.pipe(
-    ofType(CustomerActions.AuthActionsTypes.FetchCustomer),
+    ofType(CustomerActions.CustomerActionTypes.FetchCustomer),
     tap(test => {
       console.log(test)
     })
   );
+
+  @Effect()
+  createCustomer = this.actions$.pipe(
+    ofType(CustomerActions.CustomerActionTypes.CreateCustomer),
+    switchMap(props => {
+      //TODO: HTTP Post
+
+      console.log('Effects => ' + props)
+      return of(CustomerActions.setCustomer(props))
+    })
+  )
 }

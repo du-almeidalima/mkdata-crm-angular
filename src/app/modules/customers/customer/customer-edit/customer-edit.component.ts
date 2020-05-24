@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Store} from "@ngrx/store";
+import * as CustomerActions from '../store/customer.actions';
+import * as fromCustomers from '../store/customer.reducer';
 
 @Component({
   selector: 'app-customer-edit',
@@ -7,18 +10,22 @@ import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@a
   styleUrls: ['./customer-edit.component.scss']
 })
 export class CustomerEditComponent implements OnInit {
+
   public customerForm: FormGroup;
   public cpfCnpjTitle = 'CPF';
   public rgIeTitle = 'RG';
+  public customerGroups = ['Distribuidor', 'Revendedor', 'Manutenção']
 
   public get phoneControls(): AbstractControl[] {
     return (this.customerForm.get('phones') as FormArray).controls
   }
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private store: Store<fromCustomers.CustomerState>) { }
 
   ngOnInit(): void {
     this.createForm();
+
+    // TODO: Store Get Groups
   }
 
   private createForm(): void {
@@ -52,6 +59,7 @@ export class CustomerEditComponent implements OnInit {
   }
 
   public onSubmit() {
-    console.log(this.customerForm.value);
+    const customer = {...this.customerForm.value}
+    this.store.dispatch(CustomerActions.createCustomer(customer))
   }
 }
