@@ -16,8 +16,9 @@
         Clientes
       </button>
       <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="customerMenu">
-        <a ngbDropdownItem routerLink="/clientes/cadastro">Cadastro</a>
-        <a ngbDropdownItem routerLink="/clientes">Consulta</a>
+        <a ngbDropdownItem [routerLink]="['clientes','cliente']">Cadastro de Cliente</a>
+        <a ngbDropdownItem [routerLink]="['clientes','grupo']">Cadastro de Grupo de Cliente</a>
+        <a ngbDropdownItem [routerLink]="['clientes','consulta']">Consulta</a>
       </div>
     </div>
 

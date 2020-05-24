@@ -5,12 +5,12 @@ import {AuthModule} from "./auth/auth.module";
 import {AuthGuard} from "./auth/auth.guard";
 import {HomeComponent} from './components/home/home.component';
 import {HeaderComponent} from './components/header/header.component';
-import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
 import {MatCardModule} from "@angular/material/card";
 import {SharedModule} from "../shared/shared.module";
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 const CORE_ROUTES: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
@@ -28,13 +28,13 @@ const CORE_ROUTES: Routes = [
   imports: [
     CommonModule,
     AuthModule,
+    SharedModule,
     RouterModule.forChild(CORE_ROUTES),
-    MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    NgbDropdownModule,
     MatCardModule,
-    SharedModule
+    MatToolbarModule,
+    NgbDropdownModule
   ]
 })
 export class CoreModule {}

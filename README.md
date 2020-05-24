@@ -19,11 +19,16 @@ como arquitetar os componentes, as rotas e já estruturar o estado da aplicaçã
                 |-- auth
                 |-- header
             |-- modules
-                |-- clientes
-                    |-- cadastro
-                        |- cadastro.component.ts
-                        |- cadastro.component.html
-                        |- ...
+                |-- customers
+                    |-- register
+                        |- register.component.ts
+                        |- register.component.html
+                            |- customer
+                                |- customer.component.ts
+                                |- ...
+                            |- customer-group
+                                |- customer-group.component.ts...
+                                |- ...
                     |-- consulta
                         |- consulta.component.ts
                         |- consulta.component.html

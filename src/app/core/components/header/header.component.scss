@@ -16,7 +16,7 @@
     color: $gray-200;
   }
 
-  &:active, &:focus {
+  &:active, &:focus, &:visited, &:hover {
     text-decoration: none;
   }
 
