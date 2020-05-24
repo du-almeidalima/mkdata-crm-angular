@@ -20,15 +20,14 @@ como arquitetar os componentes, as rotas e já estruturar o estado da aplicaçã
                 |-- header
             |-- modules
                 |-- customers
-                    |-- register
-                        |- register.component.ts
-                        |- register.component.html
-                            |- customer
-                                |- customer.component.ts
-                                |- ...
-                            |- customer-group
-                                |- customer-group.component.ts...
-                                |- ...
+                    |- customer
+                        |- customer.component.ts
+                        |- customer.component.html
+                        |- ...
+                    |- customer-group
+                        |- customer-group.component.ts...
+                        |- customer-group.component.html
+                        |- ...
                     |-- consulta
                         |- consulta.component.ts
                         |- consulta.component.html
@@ -36,8 +35,6 @@ como arquitetar os componentes, as rotas e já estruturar o estado da aplicaçã
                     |-- clientes-routes.module.ts
                     |-- clientes.module.ts
                     |-- clientes.component.ts
-                    |-- clientes.component.scss
-                    |-- clientes.component.html
             |-- shared
                 |-- directives
                 |-- components
@@ -66,8 +63,28 @@ a aplicação seja simples, gosto de pensar que um dia ela poderá expandir e fi
 
 ### Step 2: Autenticação
 
-Esta etapa comecei criando o componente de Login, que será o primeiro que o usuário verá. Como é um componente
-relativamente simples, decidi usar TD - Template Driven forms.
+Nesta etapa criei o componente de Login, que será o primeiro que o usuário verá. Como é um componente
+relativamente simples, decidi usar TD - Template Driven forms. Quando a autenticação é feita, um objeto contendo
+as informações da sessão é criado e guardado no LocalStorage. Juntamente com isso, um timer é disparado com base no
+session_duration, quando esse valor é atingido o usuário é deslogado e seu objeto no LS destruído. Em caso de refresh
+o `app.component` dispara uma ação para verificar se existe um objeto de sessão no LS e se ele é vado, caso verdadeiro,
+o usuário é autenticado automaticamente. Também criei um Guard que assegura que o usuário está logado. Tudo isso 
+está contido no Auth Module.
+
+### Step 3: Customer Module
+
+O Customer Module conterá tudo que é referente a feature de Clientes, ele é Lazy Loaded no `app.module.ts`.
+As rotas serão organizadas: 
+```
+ ./clientes
+ .../cliente
+    .../cadastro
+    .../edit
+ .../grupo
+    .../cadastro
+    .../edit
+ .../consulta
+```
 
 ## Ferramentas
 

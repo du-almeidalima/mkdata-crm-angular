@@ -9,13 +9,16 @@ import { CustomerEditComponent } from './customer/customer-edit/customer-edit.co
 import { CustomerDetailsComponent } from './customer/customer-details/customer-details.component';
 import { CustomerGroupDetailsComponent } from './customer-group/customer-group-details/customer-group-details.component';
 import { CustomerGroupEditComponent } from './customer-group/customer-group-edit/customer-group-edit.component';
+import {StoreModule} from "@ngrx/store";
+import * as fromCustomers from './store/customers.reducer';
 
 
 @NgModule({
   declarations: [CustomersComponent, SearchComponent, CustomerComponent, CustomerGroupComponent, CustomerEditComponent, CustomerDetailsComponent, CustomerGroupDetailsComponent, CustomerGroupEditComponent],
   imports: [
     CommonModule,
-    CustomersRoutesModule
+    CustomersRoutesModule,
+    StoreModule.forFeature('customers', fromCustomers.customerReducers)
   ]
 })
 export class CustomersModule { }
