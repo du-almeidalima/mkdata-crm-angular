@@ -1,1 +1,99 @@
-<p>customer-edit works!</p>
+<section class="white-container">
+  <h1 class="text-center">Cadastrar Cliente</h1>
+  <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <!-- Nome -->
+      <mat-form-field appearance="standard" class="col-12">
+        <mat-label>Nome</mat-label>
+        <input formControlName="name" matInput required tabindex="1">
+      </mat-form-field>
+      <!-- Tipo -->
+      <div class="app-customer-radio col-12">
+        <label class="app-customer-label mr-4" id="typeLabel">Tipo de Pessoa</label>
+        <mat-radio-group formControlName="type" aria-labelledby="typeLabel" required>
+          <mat-radio-button value="fisica" tabIndex="2">Física</mat-radio-button>
+          <mat-radio-button class="ml-3" value="juridica" tabindex="3">Jurídica</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <!-- CPF/CNPJ -->
+      <mat-form-field appearance="standard" class="col-12 col-sm-6 mt-2">
+        <mat-label>{{cpfCnpjTitle}}</mat-label>
+        <input matInput formControlName="cpfCnpj" placeholder="123.456.678-90" required tabindex="4">
+      </mat-form-field>
+      <!-- RG/IE-->
+      <mat-form-field appearance="standard" class="col-12 col-sm-6">
+        <mat-label>{{rgIeTitle}}</mat-label>
+        <input matInput formControlName="rgIe" placeholder="123.456.678-90" required tabindex="5">
+      </mat-form-field>
+      <!-- Data de Cadastro -->
+      <mat-form-field class="col-12">
+        <mat-label>Choose a date</mat-label>
+        <input matInput formControlName="registerDate" [matDatepicker]="registerDate" tabindex="6">
+        <mat-datepicker-toggle matSuffix [for]="registerDate"></mat-datepicker-toggle>
+        <mat-datepicker #registerDate></mat-datepicker>
+      </mat-form-field>
+
+      <!-- Grupos -->
+      <mat-form-field class="col-12">
+        <mat-label>Grupo</mat-label>
+        <mat-select formControlName="group" tabindex="7">
+          <mat-option>
+            Grupo 1
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Status do Cliente -->
+      <div class="app-customer-radio col-12">
+        <label class="app-customer-label mr-4" id="statusLabel">Status do Cliente</label>
+        <mat-slide-toggle formControlName="status" aria-label="statusLabel" tabindex="8">Ativo</mat-slide-toggle>
+      </div>
+
+      <!-- Telefone -->
+      <div class="col-12 mt-4" formArrayName="phones">
+        <div class="d-flex justify-content-between">
+          <label class="app-customer-label app-customer-label-v-center">Telefones</label>
+          <button mat-icon-button
+            color="primary"
+            type="button"
+            (click)="onAddPhone()"
+            [disabled]="phoneControls.length > 4"
+          >
+            <mat-icon fontSet="fa" fontIcon="fa-plus"></mat-icon>
+          </button>
+        </div>
+        <!-- Telefone List -->
+        <div class="d-flex justify-content-between" *ngFor="let phone of phoneControls; let i = index">
+          <label class="mt-2" [for]="'phone' + i">{{'Telefone ' + (i + 1)}}</label>
+          <div class="d-flex justify-content-between w-75">
+            <mat-form-field class="app-customer-phone w-75" appearance="standard">
+              <input matInput placeholder="123.456.678-90" required [id]="'phone' + i">
+            </mat-form-field>
+            <!-- Remove Btn -->
+            <button *ngIf="i > 0"
+              class="app-customer-remove-btn"
+              mat-button mat-icon-button aria-label="Clear"
+              (click)="oneRemovePhone(i)"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-sm-6 offset-sm-3 mt-4">
+        <button
+          class="btn btn-block"
+          color="primary"
+          mat-flat-button
+          type="submit"
+          tabindex="9"
+          [disabled]="customerForm.untouched || (customerForm.touched && customerForm.invalid)">
+          Cadastrar
+        </button>
+      </div>
+    </div>
+  </form>
+</section>

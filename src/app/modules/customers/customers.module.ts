@@ -1,5 +1,19 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {StoreModule} from "@ngrx/store";
+import {EffectsModule} from "@ngrx/effects";
+import {ReactiveFormsModule} from "@angular/forms";
+
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatIconModule} from "@angular/material/icon";
+import {MatInputModule} from "@angular/material/input";
+import {MatRadioModule} from "@angular/material/radio";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatSelectModule} from "@angular/material/select";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatButtonModule} from "@angular/material/button";
+import {MatNativeDateModule} from "@angular/material/core";
+
 import {CustomersComponent} from './customers.component';
 import {SearchComponent} from './search/search.component';
 import {CustomerComponent} from './customer/customer.component';
@@ -9,16 +23,37 @@ import { CustomerEditComponent } from './customer/customer-edit/customer-edit.co
 import { CustomerDetailsComponent } from './customer/customer-details/customer-details.component';
 import { CustomerGroupDetailsComponent } from './customer-group/customer-group-details/customer-group-details.component';
 import { CustomerGroupEditComponent } from './customer-group/customer-group-edit/customer-group-edit.component';
-import {StoreModule} from "@ngrx/store";
-import * as fromCustomers from './store/customers.reducer';
+
+import * as fromCustomers from './store';
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 
 
 @NgModule({
-  declarations: [CustomersComponent, SearchComponent, CustomerComponent, CustomerGroupComponent, CustomerEditComponent, CustomerDetailsComponent, CustomerGroupDetailsComponent, CustomerGroupEditComponent],
+  declarations: [
+    CustomersComponent,
+    SearchComponent,
+    CustomerComponent,
+    CustomerGroupComponent,
+    CustomerEditComponent,
+    CustomerDetailsComponent,
+    CustomerGroupDetailsComponent,
+    CustomerGroupEditComponent],
   imports: [
     CommonModule,
     CustomersRoutesModule,
-    StoreModule.forFeature('customers', fromCustomers.customerReducers)
+    ReactiveFormsModule,
+    StoreModule.forFeature('customers', fromCustomers.customersReducers),
+    EffectsModule.forFeature(fromCustomers.customersEffects),
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatSlideToggleModule
   ]
 })
 export class CustomersModule { }
