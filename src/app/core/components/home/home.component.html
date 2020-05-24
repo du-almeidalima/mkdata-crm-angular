@@ -1,1 +1,7 @@
-<p>home works!</p>
+<section>
+  <h1 class="app-home-welcome text-center">Bem vindo {{userName | async}}</h1>
+
+  <h4 class="text-center mt-5">Ações Rápidas</h4>
+
+  <app-feature-cards [features]="features"></app-feature-cards>
+</section>

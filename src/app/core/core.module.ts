@@ -9,6 +9,8 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
+import {MatCardModule} from "@angular/material/card";
+import {SharedModule} from "../shared/shared.module";
 
 const CORE_ROUTES: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
@@ -30,7 +32,9 @@ const CORE_ROUTES: Routes = [
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    NgbDropdownModule
+    NgbDropdownModule,
+    MatCardModule,
+    SharedModule
   ]
 })
 export class CoreModule {}

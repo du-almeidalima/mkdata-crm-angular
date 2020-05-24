@@ -1,0 +1,19 @@
+@import "src/styles";
+
+.app-feature-img-card {
+  @extend .center-x;
+  margin: 0 auto !important;
+  width: 80%;
+}
+
+/** Icons made by https://www.flaticon.com/authors/freepik */
+
+@media (min-width: $medium) {
+  .app-feature-img-card {
+    width: 50%;
+  }
+
+  .app-feature-card {
+    min-height: 210px;
+  }
+}
