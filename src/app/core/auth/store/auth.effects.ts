@@ -75,6 +75,7 @@ export class AuthEffects {
 
   // Handlers
   private handleAuthenticationSuccess(): Observable<any> {
+    // TODO
     const user = new User(
       'Eduardo Lima',
       '1',

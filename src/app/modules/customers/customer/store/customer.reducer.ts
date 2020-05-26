@@ -1,20 +1,23 @@
 import {Action, createReducer, on} from "@ngrx/store";
+import {Customer} from "../../../../shared/models/customer";
 import * as CustomerActions from './customer.actions';
 
 export interface CustomerState {
-  customer: {}
+  current: Customer,
+  message: string
 }
 
 const initialState: CustomerState = {
-  customer: null
+  current: null,
+  message: null
 };
 
 // Auth Reducers
 const customerReducerCreator = createReducer(initialState,
-  on(CustomerActions.setCustomer, state => ({ ...state})),
-  on(CustomerActions.createCustomer, state => ({})),
+  on(CustomerActions.setCustomer, (state, props) => ({ ...state, current: props.payload})),
   on(CustomerActions.deleteCustomer, state => ({})),
   on(CustomerActions.updateCustomer, state => ({})),
+  on(CustomerActions.customerError, (state, props) => ({ ...state, message: props.payload})),
 );
 
 export function customerReducer(state: CustomerState | undefined, action: Action) {

@@ -1,1 +1,23 @@
-<p>customer-details works!</p>
+<section class="white-container">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="text-black-50 text-center">Customer Details</h1>
+    </div>
+    <div class="col-12 d-flex justify-content-end">
+      <button class="text-warning" mat-icon-button (click)="onEditUser()">
+        <mat-icon fontSet="fa" fontIcon="fa-user-edit"></mat-icon>
+      </button>
+      <button class="text-danger" mat-icon-button (click)="onEditUser()">
+        <mat-icon fontSet="fa" fontIcon="fa-user-minus"></mat-icon>
+      </button>
+    </div>
+    <div class="col-12">
+      <ul>
+        <li>{{customer.name}}</li>
+        <li>{{customer.cpfCnpj}}</li>
+        <li>{{customer.rgIe}}</li>
+        <li>{{customer.status}}</li>
+      </ul>
+    </div>
+  </div>
+</section>

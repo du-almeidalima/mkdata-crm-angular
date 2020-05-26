@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import * as CustomerActions from '../store/customer.actions';
 import * as fromCustomers from '../store/customer.reducer';
+import {Customer} from "../../../../shared/models/customer";
+import {Person} from "../../../../shared/models/enum/person";
 
 @Component({
   selector: 'app-customer-edit',
@@ -16,8 +18,8 @@ export class CustomerEditComponent implements OnInit {
   public rgIeTitle = 'RG';
   public customerGroups = ['Distribuidor', 'Revendedor', 'Manutenção']
 
-  public get phoneControls(): AbstractControl[] {
-    return (this.customerForm.get('phones') as FormArray).controls
+  public get phoneControls(): FormArray {
+    return (this.customerForm.get('phones') as FormArray);
   }
 
   constructor(private fb: FormBuilder, private store: Store<fromCustomers.CustomerState>) { }
@@ -31,10 +33,10 @@ export class CustomerEditComponent implements OnInit {
   private createForm(): void {
     this.customerForm = this.fb.group({
       name: ['', Validators.required],
-      type: ['fisica', Validators.required],
+      type: [Person.FISICA, Validators.required],
       cpfCnpj: ['', Validators.required],
       rgIe: [''],
-      registerDate: [''],
+      registerDate: [new Date()],
       group: [''],
       status: [true],
       phones: this.fb.array([
@@ -49,17 +51,20 @@ export class CustomerEditComponent implements OnInit {
   }
 
   public onAddPhone(): void {
-    (this.customerForm.get('phones') as FormArray).push(
+    this.phoneControls.push(
       this.fb.control('')
     )
   }
 
   public oneRemovePhone(index: number): void {
-    (this.customerForm.get('phones') as FormArray).removeAt(index)
+    this.phoneControls.removeAt(index)
   }
 
   public onSubmit() {
-    const customer = {...this.customerForm.value}
-    this.store.dispatch(CustomerActions.createCustomer(customer))
+    const customer: Customer = {
+      ...this.customerForm.value,
+      phones: [...this.customerForm.value.phones]
+    }
+    this.store.dispatch(CustomerActions.createCustomer({payload: customer}))
   }
 }
