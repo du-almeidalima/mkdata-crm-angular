@@ -12,6 +12,4 @@ export class CustomerResolverService implements Resolve<void>{
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): void {
     return undefined;
   }
-
-
 }

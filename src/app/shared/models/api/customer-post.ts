@@ -1,7 +1,7 @@
-import {Person} from "./enum/person";
-import {CustomerGroup} from "./customer-group";
+import {Person} from "../enum/person";
 
-export interface Customer {
+/* Customer DTP seguindo Spring HATEOAS */
+export interface CustomerPost {
   id?: number;
   name: string;
   type: Person;
@@ -9,6 +9,6 @@ export interface Customer {
   rgIe: string;
   status: boolean;
   registerDate: number;
-  customerGroup: CustomerGroup;
+  customerGroup: string;
   phones: string[];
 }

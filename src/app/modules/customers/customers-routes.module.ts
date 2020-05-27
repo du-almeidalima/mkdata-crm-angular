@@ -8,6 +8,7 @@ import {CustomerEditComponent} from "./customer/customer-edit/customer-edit.comp
 import {CustomerDetailsComponent} from "./customer/customer-details/customer-details.component";
 import {CustomerGroupDetailsComponent} from "./customer-group/customer-group-details/customer-group-details.component";
 import {CustomerGroupEditComponent} from "./customer-group/customer-group-edit/customer-group-edit.component";
+import {CustomerGroupResolver} from "./customer-group/customer-group-resolver.service";
 
 const CUSTOMERS_ROUTES: Routes = [
   { path: '', component: CustomersComponent, canActivate: [ AuthGuard ], children:
@@ -17,8 +18,8 @@ const CUSTOMERS_ROUTES: Routes = [
         { path: 'consulta/:term', component: SearchComponent},
         { path: 'cliente', component: CustomersComponent, children:
             [
-              { path: 'cadastro', component: CustomerEditComponent },
-              { path: ':id/edit', component: CustomerEditComponent },
+              { path: 'cadastro', component: CustomerEditComponent, resolve: [CustomerGroupResolver] },
+              { path: ':id/edit', component: CustomerEditComponent, resolve: [CustomerGroupResolver] },
               { path: ':id', component: CustomerDetailsComponent },
               { path: '', redirectTo: 'cadastro', pathMatch: 'full' },
             ]

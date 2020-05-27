@@ -1,8 +1,6 @@
 import {Customer} from "../customer";
 
-/**
- * Esta classe vai contar os meta dados do HATEOAS
- */
+/** Interface que estende {@link Customer} e implementa os meta dados do HATEOAS na resposta da API */
 export interface CustomerResponse extends Customer {
   _links: {
     self: {

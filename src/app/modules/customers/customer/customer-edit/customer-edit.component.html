@@ -37,9 +37,9 @@
           <!-- Grupos -->
           <mat-form-field class="col-12">
             <mat-label>Grupo</mat-label>
-            <mat-select formControlName="group" tabindex="7">
-              <mat-option *ngFor="let group of customerGroups" [value]="group">
-                {{group}}
+            <mat-select formControlName="customerGroup" tabindex="7">
+              <mat-option *ngFor="let group of customerGroups; let i = index" [value]="i">
+                {{group.name}}
               </mat-option>
             </mat-select>
           </mat-form-field>

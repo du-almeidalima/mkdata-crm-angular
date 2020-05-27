@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Store} from "@ngrx/store";
-import * as CustomerActions from '../store/customer.actions';
-import * as fromCustomers from '../store/customer.reducer';
-import {Customer} from "../../../../shared/models/customer";
+import {select, Store} from "@ngrx/store";
 import {Person} from "../../../../shared/models/enum/person";
+import {CustomerGroup} from "../../../../shared/models/customer-group";
+import {Customer} from "../../../../shared/models/customer";
+import * as CustomerActions from '../store/customer.actions';
+import * as fromCustomers from '../../store/index';
 
 @Component({
   selector: 'app-customer-edit',
@@ -16,18 +17,26 @@ export class CustomerEditComponent implements OnInit {
   public customerForm: FormGroup;
   public cpfCnpjTitle = 'CPF';
   public rgIeTitle = 'RG';
-  public customerGroups = ['Distribuidor', 'Revendedor', 'Manutenção']
+  public customerGroups: CustomerGroup[] = [];
 
   public get phoneControls(): FormArray {
     return (this.customerForm.get('phones') as FormArray);
   }
 
-  constructor(private fb: FormBuilder, private store: Store<fromCustomers.CustomerState>) { }
+  constructor(private fb: FormBuilder, private store: Store<fromCustomers.CustomersState>) { }
 
   ngOnInit(): void {
     this.createForm();
-
-    // TODO: Store Get Groups
+    // Recebendo o valor da ação disparada pelo CustomerGroupResolver e atribuindo os grupos disponíveis no formulário
+    this.store.pipe(
+      select(fromCustomers.getCustomerGroups)
+    ).subscribe( customerGroups => {
+      this.customerGroups = customerGroups;
+      // Ativando o select
+      if (this.customerGroups.length > 0) {
+        this.customerForm.get('customerGroup').enable();
+      }
+    })
   }
 
   private createForm(): void {
@@ -37,7 +46,7 @@ export class CustomerEditComponent implements OnInit {
       cpfCnpj: ['', Validators.required],
       rgIe: [''],
       registerDate: [new Date()],
-      group: [''],
+      customerGroup: [{value: null, disabled: true}],
       status: [true],
       phones: this.fb.array([
         this.fb.control('')
@@ -45,8 +54,8 @@ export class CustomerEditComponent implements OnInit {
     })
 
     this.customerForm.get('type').valueChanges.subscribe(v => {
-      this.cpfCnpjTitle = v === 'fisica' ? 'CPF' : 'CNPJ';
-      this.rgIeTitle = v === 'fisica' ? 'RG' : 'IE';
+      this.cpfCnpjTitle = v === 'FISICA' ? 'CPF' : 'CNPJ';
+      this.rgIeTitle = v === 'FISICA' ? 'RG' : 'IE';
     })
   }
 
@@ -63,8 +72,10 @@ export class CustomerEditComponent implements OnInit {
   public onSubmit() {
     const customer: Customer = {
       ...this.customerForm.value,
-      phones: [...this.customerForm.value.phones]
+      phones: [...this.customerForm.value.phones],
+      registerDate: new Date(this.customerForm.value.registerDate).getTime(),
+      customerGroup: this.customerGroups[this.customerForm.value.customerGroup]
     }
-    this.store.dispatch(CustomerActions.createCustomer({payload: customer}))
+    this.store.dispatch(CustomerActions.createCustomer({ payload: customer }))
   }
 }
