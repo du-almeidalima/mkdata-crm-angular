@@ -12,6 +12,7 @@ import {environment as env} from '../environments/environment';
 import {CoreModule} from "./core/core.module";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {CustomersModule} from "./modules/customers/customers.module";
+import {NgxMaskModule} from "ngx-mask";
 
 // For Console Logging the State
 function logger(reducer: ActionReducer<any>): any {
@@ -33,6 +34,7 @@ const metaReducers = env.production ? [] : [ logger ];
     AppRoutingModule,
     CoreModule,
     CustomersModule,
+    NgxMaskModule.forRoot(),
     StoreModule.forRoot({}, { metaReducers }),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: env.production }),

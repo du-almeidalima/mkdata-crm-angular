@@ -86,10 +86,21 @@ As rotas serão organizadas:
  .../consulta
 ```
 
+Utilizei o mesmo componente tanto para a criação como para edição de Customer e CustomerGroup. 
+Para o cadastro de cliente (CustomerEdit) fiz uso do Reactive Forms do Angular, com validações Async para
+verificar se o CPF/CNPJ já existia. Também utilizei a biblioteca NgxMask para criar as máscaras dos campos.
+O campo Grupos é buscado via API toda vez que a tela de Cadastro e Edição é carregada, para sempre ter valores atualizados.
+
+Um Detalhe, que devido a estar utilizando Spring Data REST como API, a inserção de relacionamentos OneToMany e ManyToMany são feitas
+por URL, por exemplo, para inserir uma entidade CustomerGroup a um Customer foi necessário passar o URL deste CustomerGroup
+por exemplo como propriedade no campo `customerGroup: 'http://localhost:4300/api/customer-groups/2'` do cliente a ser enviado. Para
+esse tipo de transação, o Util CustomerMapper foi criado.
+
 ## Ferramentas
 
 * **[Angular](https://angular.io/)** - 9.1.6
 * **[NgRx](https://ngrx.io/)** - 6.5.4
 * **[NgRx-Store-Logger](https://www.npmjs.com/package/ngrx-store-logger)** - 0.2.4
+* **[Ngx-Mask](https://github.com/JsDaddy/ngx-mask)** - 9.1.2
 * **[Ng-Bootstrap](https://ng-bootstrap.github.io/)** - 0.2.4
 * **[Angular Material](https://material.angular.io/)** - 9.2.4

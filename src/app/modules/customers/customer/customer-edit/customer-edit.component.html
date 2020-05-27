@@ -11,7 +11,7 @@
           </mat-form-field>
           <!-- Tipo -->
           <div class="app-customer-radio col-12 mb-2">
-            <label class="app-customer-label mr-4" id="typeLabel">Tipo de Pessoa</label>
+            <label class="app-customer-label mr-2 mr-md-4" id="typeLabel">Tipo de Pessoa</label>
             <mat-radio-group formControlName="type" aria-labelledby="typeLabel" required>
               <mat-radio-button value="FISICA" tabIndex="2">Física</mat-radio-button>
               <mat-radio-button class="ml-3" value="JURIDICA" tabindex="3">Jurídica</mat-radio-button>
@@ -20,22 +20,35 @@
           <!-- CPF/CNPJ -->
           <mat-form-field appearance="standard" class="col-12 col-sm-6">
             <mat-label>{{cpfCnpjTitle}}</mat-label>
-            <input matInput formControlName="cpfCnpj" placeholder="123.456.678-90" required tabindex="4">
+            <input formControlName="cpfCnpj"
+                   matInput
+                   [placeholder]="cpfCnpjMask"
+                   [mask]="cpfCnpjMask"
+                   required
+                   tabindex="4">
+            <mat-error *ngIf="cpfCnpjFormControl.hasError('cpfCnpjExists')">
+              Este {{cpfCnpjTitle}} já está em uso.
+            </mat-error>
           </mat-form-field>
           <!-- RG/IE-->
           <mat-form-field appearance="standard" class="col-12 col-sm-6">
             <mat-label>{{rgIeTitle}}</mat-label>
-            <input matInput formControlName="rgIe" placeholder="123.456.678-90" required tabindex="5">
+            <input formControlName="rgIe"
+                   matInput
+                   [placeholder]="rgIeMask"
+                   [mask]="rgIeMask"
+                   required
+                   tabindex="5">
           </mat-form-field>
           <!-- Data de Cadastro -->
-          <mat-form-field class="col-12">
+          <mat-form-field class="col-12 mt-2">
             <mat-label>Choose a date</mat-label>
             <input matInput formControlName="registerDate" [matDatepicker]="registerDate" tabindex="6">
             <mat-datepicker-toggle matSuffix [for]="registerDate"></mat-datepicker-toggle>
             <mat-datepicker #registerDate></mat-datepicker>
           </mat-form-field>
           <!-- Grupos -->
-          <mat-form-field class="col-12">
+          <mat-form-field class="col-12 mt-2">
             <mat-label>Grupo</mat-label>
             <mat-select formControlName="customerGroup" tabindex="7">
               <mat-option *ngFor="let group of customerGroups; let i = index" [value]="i">
@@ -43,13 +56,11 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-
           <!-- Status do Cliente -->
           <div class="app-customer-radio col-12">
             <label class="app-customer-label mr-4" id="statusLabel">Status do Cliente</label>
             <mat-slide-toggle formControlName="status" aria-label="statusLabel" tabindex="8">Ativo</mat-slide-toggle>
           </div>
-
           <!-- Telefone -->
           <div class="col-12 mt-4" formArrayName="phones">
             <div class="d-flex justify-content-between">
@@ -69,9 +80,11 @@
               <div class="d-flex justify-content-between w-75">
                 <mat-form-field class="app-customer-phone w-75" appearance="standard">
                   <input [formControlName]="i"
-                    matInput
-                    placeholder="(XX) 9XXXXX-XXXX"
-                    [id]="'phone' + i">
+                         matInput
+                         prefix="+55 "
+                         mask="(00) 00000-0000"
+                         placeholder="(XX) 9XXXXX-XXXX"
+                         [id]="'phone' + i">
                 </mat-form-field>
                 <!-- Remove Btn -->
                 <button *ngIf="i > 0"

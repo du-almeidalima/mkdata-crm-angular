@@ -1,11 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {select, Store} from "@ngrx/store";
 import {Person} from "../../../../shared/models/enum/person";
 import {CustomerGroup} from "../../../../shared/models/customer-group";
 import {Customer} from "../../../../shared/models/customer";
 import * as CustomerActions from '../store/customer.actions';
 import * as fromCustomers from '../../store/index';
+import {cpfCpnjAsyncValidator} from "../customer-validators";
+import {CustomerService} from "../customer.service";
 
 @Component({
   selector: 'app-customer-edit',
@@ -23,7 +25,24 @@ export class CustomerEditComponent implements OnInit {
     return (this.customerForm.get('phones') as FormArray);
   }
 
-  constructor(private fb: FormBuilder, private store: Store<fromCustomers.CustomersState>) { }
+  public get cpfCnpjFormControl(): FormControl {
+    return (this.customerForm.get('cpfCnpj') as FormControl)
+  }
+
+  public get cpfCnpjMask(): string {
+    return this.cpfCnpjTitle === 'CPF' ? '000.000.000-00' : '00.000.000/0000-00'
+  }
+
+  public get rgIeMask(): string {
+    // Mask de IE para SP
+    return this.rgIeTitle === 'RG' ? '00.000.000-0' : '000.000.000.000';
+  }
+
+  constructor(
+    private fb: FormBuilder,
+    private store: Store<fromCustomers.CustomersState>,
+    private customerService: CustomerService
+    ) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -43,10 +62,17 @@ export class CustomerEditComponent implements OnInit {
     this.customerForm = this.fb.group({
       name: ['', Validators.required],
       type: [Person.FISICA, Validators.required],
-      cpfCnpj: ['', Validators.required],
+      cpfCnpj: ['', {
+        validators: [Validators.required],
+        asyncValidators: [cpfCpnjAsyncValidator(this.customerService)],
+        updateOn: 'blur'
+      }],
       rgIe: [''],
       registerDate: [new Date()],
-      customerGroup: [{value: null, disabled: true}],
+      customerGroup: [{
+        value: null,
+        disabled: true
+      }],
       status: [true],
       phones: this.fb.array([
         this.fb.control('')
@@ -54,8 +80,15 @@ export class CustomerEditComponent implements OnInit {
     })
 
     this.customerForm.get('type').valueChanges.subscribe(v => {
-      this.cpfCnpjTitle = v === 'FISICA' ? 'CPF' : 'CNPJ';
-      this.rgIeTitle = v === 'FISICA' ? 'RG' : 'IE';
+      if (v === Person.FISICA) {
+        this.cpfCnpjTitle = 'CPF';
+        this.rgIeTitle = 'RG';
+      } else {
+        this.cpfCnpjTitle = 'CNPJ';
+        this.rgIeTitle = 'IE';
+      }
+
+      this.customerForm.updateValueAndValidity();
     })
   }
 

@@ -15,7 +15,9 @@ import * as CustomerActions from './customer.actions';
 
 @Injectable()
 export class CustomerEffect {
-  private readonly CUSTOMER_URL = env.baseUrl + env.customers
+
+  private readonly CUSTOMER_URL = env.baseUrl + env.customers;
+
   constructor(
     private actions$: Actions,
     private store: Store<fromCustomers.CustomersState>,

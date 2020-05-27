@@ -13,6 +13,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatButtonModule} from "@angular/material/button";
 import {MatNativeDateModule} from "@angular/material/core";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 
 import {CustomersComponent} from './customers.component';
 import {SearchComponent} from './search/search.component';
@@ -23,9 +24,8 @@ import { CustomerEditComponent } from './customer/customer-edit/customer-edit.co
 import { CustomerDetailsComponent } from './customer/customer-details/customer-details.component';
 import { CustomerGroupDetailsComponent } from './customer-group/customer-group-details/customer-group-details.component';
 import { CustomerGroupEditComponent } from './customer-group/customer-group-edit/customer-group-edit.component';
-
 import * as fromCustomers from './store';
-import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {NgxMaskModule} from "ngx-mask";
 
 
 @NgModule({
@@ -44,6 +44,7 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
     ReactiveFormsModule,
     StoreModule.forFeature('customers', fromCustomers.customersReducers),
     EffectsModule.forFeature(fromCustomers.customersEffects),
+    NgxMaskModule.forChild(),
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
