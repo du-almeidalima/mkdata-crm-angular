@@ -1,5 +1,6 @@
 import {createAction, props} from "@ngrx/store";
 import {Customer} from "../../../../shared/models/customer";
+import {Message} from "../../../../shared/message";
 
 export enum CustomerActionTypes {
   FetchCustomer = '[Customers] Fetch Customer',
@@ -7,13 +8,14 @@ export enum CustomerActionTypes {
   CreateCustomer = '[Customers] Create Customer',
   DeleteCustomer = '[Customers] Delete Customer',
   UpdateCustomer = '[Customers] Update Customer',
-  CustomerError = '[Customers] Customer Error'
+  CustomerError = '[Customers] Customer Error',
+  DismissMessage = '[Customers] Dismiss Message'
 }
 
 // Customer Actions
 export const fetchCustomer = createAction(
   CustomerActionTypes.FetchCustomer,
-  props<{ }>()
+  props<{ payload: number }>()
 );
 
 export const setCustomer = createAction(
@@ -37,5 +39,9 @@ export const updateCustomer = createAction(
 
 export const customerError = createAction(
   CustomerActionTypes.CustomerError,
-  props<{ payload: string }>()
+  props<{ payload: Message }>()
+);
+
+export const dismissMessage = createAction(
+  CustomerActionTypes.DismissMessage
 );

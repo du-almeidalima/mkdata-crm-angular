@@ -1,8 +1,9 @@
 <section class="white-container">
-  <div class="row">
-    <div class="col-12">
-      <h1 class="text-black-50 text-center">Customer Details</h1>
-    </div>
+  <h1 class="text-black-50 text-center">Customer Details</h1>
+  <!-- Message -->
+  <ngb-alert *ngIf="message" [type]="message.severity" (close)="onDismissMessage()">{{ message.content }}</ngb-alert>
+  <!-- Customer Details -->
+  <div class="row" *ngIf="customer">
     <div class="col-12 d-flex justify-content-end">
       <button class="text-warning" mat-icon-button (click)="onEditUser()">
         <mat-icon fontSet="fa" fontIcon="fa-user-edit"></mat-icon>
@@ -12,12 +13,16 @@
       </button>
     </div>
     <div class="col-12">
-      <ul>
-        <li>{{customer.name}}</li>
-        <li>{{customer.cpfCnpj}}</li>
-        <li>{{customer.rgIe}}</li>
-        <li>{{customer.status}}</li>
-      </ul>
+      <div class="row">
+        <div class="col-3">Nome</div>
+        <div class="col-9">{{customer.name}}</div>
+        <div class="col-3">Nome</div>
+        <div class="col-9">{{customer.name}}</div>
+        <div class="col-3">Nome</div>
+        <div class="col-9">{{customer.name}}</div>
+        <div class="col-3">Nome</div>
+        <div class="col-9">{{customer.name}}</div>
+      </div>
     </div>
   </div>
 </section>

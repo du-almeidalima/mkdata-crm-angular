@@ -40,7 +40,7 @@ export class CustomerEditComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private store: Store<fromCustomers.CustomersState>,
+    private store: Store<fromCustomers.State>,
     private customerService: CustomerService
     ) { }
 

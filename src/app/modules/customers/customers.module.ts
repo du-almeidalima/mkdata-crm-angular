@@ -26,6 +26,7 @@ import { CustomerGroupDetailsComponent } from './customer-group/customer-group-d
 import { CustomerGroupEditComponent } from './customer-group/customer-group-edit/customer-group-edit.component';
 import * as fromCustomers from './store';
 import {NgxMaskModule} from "ngx-mask";
+import {NgbAlertModule} from "@ng-bootstrap/ng-bootstrap";
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import {NgxMaskModule} from "ngx-mask";
     MatSelectModule,
     MatCheckboxModule,
     MatButtonModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    NgbAlertModule
   ]
 })
 export class CustomersModule { }

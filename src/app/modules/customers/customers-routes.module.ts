@@ -9,6 +9,7 @@ import {CustomerDetailsComponent} from "./customer/customer-details/customer-det
 import {CustomerGroupDetailsComponent} from "./customer-group/customer-group-details/customer-group-details.component";
 import {CustomerGroupEditComponent} from "./customer-group/customer-group-edit/customer-group-edit.component";
 import {CustomerGroupResolver} from "./customer-group/customer-group-resolver.service";
+import {CustomerResolver} from "./customer/customer-resolver.service";
 
 const CUSTOMERS_ROUTES: Routes = [
   { path: '', component: CustomersComponent, canActivate: [ AuthGuard ], children:
@@ -19,8 +20,8 @@ const CUSTOMERS_ROUTES: Routes = [
         { path: 'cliente', component: CustomersComponent, children:
             [
               { path: 'cadastro', component: CustomerEditComponent, resolve: [CustomerGroupResolver] },
-              { path: ':id/edit', component: CustomerEditComponent, resolve: [CustomerGroupResolver] },
-              { path: ':id', component: CustomerDetailsComponent },
+              { path: ':id/edit', component: CustomerEditComponent, resolve: [CustomerGroupResolver, CustomerResolver] },
+              { path: ':id', component: CustomerDetailsComponent, resolve: [CustomerResolver] },
               { path: '', redirectTo: 'cadastro', pathMatch: 'full' },
             ]
         },

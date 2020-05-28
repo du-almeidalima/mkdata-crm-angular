@@ -19,7 +19,7 @@ export class CustomerGroupEffect {
 
   constructor(
     private actions$: Actions,
-    private store: Store<fromCustomer.CustomersState>,
+    private store: Store<fromCustomer.State>,
     private router: Router,
     private http: HttpClient
   ) {}

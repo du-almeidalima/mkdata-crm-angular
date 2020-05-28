@@ -3,6 +3,7 @@ import {select, Store} from "@ngrx/store";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
 import {Customer} from "../../../../shared/models/customer";
+import {Message} from "../../../../shared/message";
 import * as CustomerActions from "../store/customer.actions";
 import * as fromCustomers from '../../store/index';
 
@@ -12,18 +13,21 @@ import * as fromCustomers from '../../store/index';
   styleUrls: ['./customer-details.component.scss']
 })
 export class CustomerDetailsComponent implements OnInit, OnDestroy {
+
   public customer: Customer;
+  public message: Message;
   private storeSub: Subscription;
 
   constructor(
-    private store: Store<fromCustomers.CustomersState>,
+    private store: Store<fromCustomers.State>,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.storeSub = this.store.pipe( select(fromCustomers.getCurrentCustomer) )
-      .subscribe( customer => {
-        this.customer = customer;
+    this.storeSub = this.store.pipe( select(fromCustomers.getCustomerState) )
+      .subscribe( customerState => {
+        this.customer = customerState.current;
+        this.message = customerState.message;
       })
   }
 
@@ -41,5 +45,9 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     if (window.confirm('Essa ação não terá volta')) {
       this.store.dispatch(CustomerActions.deleteCustomer({ id: this.customer.id }))
     }
+  }
+
+  onDismissMessage() {
+    this.store.dispatch(CustomerActions.dismissMessage());
   }
 }
