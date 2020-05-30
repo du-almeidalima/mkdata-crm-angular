@@ -1,1 +1,39 @@
-<p>customer-group-edit works!</p>
+<div class="row">
+  <div class="col-12 col-md-10 center-x">
+    <section class="white-container">
+      <h1 class="text-center">Cadastrar Grupo de Clientes</h1>
+      <form [formGroup]="customerGroupForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <!-- Group Name -->
+          <mat-form-field appearance="standard" class="col-12">
+            <mat-label id="name">Nome do Grupo</mat-label>
+            <input formControlName="name" aria-labelledby="name" matInput required tabindex="1">
+            <mat-error *ngIf="nameFormControl.hasError('nameExists')">
+              Este nome já está em uso.
+            </mat-error>
+          </mat-form-field>
+          <!-- Status do Cliente -->
+          <div class="app-customer-radio col-12">
+            <label class="app-customer-label mr-4" id="statusLabel">Status do Grupo</label>
+            <mat-slide-toggle formControlName="status" aria-label="statusLabel" tabindex="8">Ativo</mat-slide-toggle>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 col-sm-4 offset-sm-8 mt-4">
+            <button
+              class="btn btn-block"
+              color="primary"
+              mat-flat-button
+              type="submit"
+              tabindex="9"
+              [disabled]="customerGroupForm.untouched || (customerGroupForm.touched && customerGroupForm.invalid)">
+              Cadastrar
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </section>
+  </div>
+</div>

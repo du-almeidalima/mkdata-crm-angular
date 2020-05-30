@@ -4,10 +4,10 @@ import {select, Store} from "@ngrx/store";
 import {Person} from "../../../../shared/models/enum/person";
 import {CustomerGroup} from "../../../../shared/models/customer-group";
 import {Customer} from "../../../../shared/models/customer";
-import * as CustomerActions from '../store/customer.actions';
-import * as fromCustomers from '../../store/index';
 import {cpfCpnjAsyncValidator} from "../customer-validators";
 import {CustomerService} from "../customer.service";
+import * as CustomerActions from '../store/customer.actions';
+import * as fromCustomers from '../../store/index';
 
 @Component({
   selector: 'app-customer-edit',
