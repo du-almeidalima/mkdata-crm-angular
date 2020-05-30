@@ -11,7 +11,7 @@ export interface FeatureCard {
   template: `
     <div class="row">
       <div *ngFor="let feature of features" class="col-10 offset-1 col-sm-8 offset-sm-2 col-md-4 offset-md-0  mt-3">
-        <mat-card class="app-feature-card"
+        <mat-card class="app-feature-card hover"
           [ngClass]="feature?.actionLink ? 'pointer' : ''"
           [routerLink]="feature.actionLink"
         >

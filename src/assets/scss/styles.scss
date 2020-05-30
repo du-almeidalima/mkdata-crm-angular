@@ -9,7 +9,7 @@ html, body {
 body {
   background-color: $light-blue !important;
 
-  div, a, button {
+  button {
     -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
     -webkit-touch-callout: none;
     -webkit-user-select: none;

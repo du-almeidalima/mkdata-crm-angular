@@ -4,5 +4,6 @@ export const environment = {
   // Customer API
   baseUrl: 'http://localhost:4300/api',
   customers: '/customers',
-  customerGroup: '/customer-groups'
+  customerGroup: '/customerGroup',
+  customerGroups: '/customer-groups'
 };

@@ -15,7 +15,7 @@ import * as CustomerGroupActions from './customer-group.actions';
 @Injectable()
 export class CustomerGroupEffect {
 
-  private readonly CUSTOMER_GROUP_URL = env.baseUrl + env.customerGroup;
+  private readonly CUSTOMER_GROUP_URL = env.baseUrl + env.customerGroups;
 
   constructor(
     private actions$: Actions,

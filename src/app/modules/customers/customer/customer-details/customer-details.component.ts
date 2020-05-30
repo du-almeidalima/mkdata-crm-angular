@@ -18,6 +18,11 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   public message: Message;
   private storeSub: Subscription;
 
+  get registryDateParsed(): string {
+    return new Date(this.customer.registerDate).toLocaleString('pt-BR', { timeZone: 'UTC'})
+  }
+
+
   constructor(
     private store: Store<fromCustomers.State>,
     private router: Router
