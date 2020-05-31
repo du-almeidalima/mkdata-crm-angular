@@ -1,6 +1,9 @@
 <div class="row">
   <div class="col-12 col-md-10 center-x">
     <section class="white-container">
+      <!-- Message -->
+      <ngb-alert *ngIf="message" [type]="message.severity" (close)="onDismissMessage()">{{ message.content }}</ngb-alert>
+
       <h1 class="text-center">{{isEditMode ? 'Atualizar' : 'Cadastrar'}} Cliente</h1>
       <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
         <div class="row">
@@ -112,7 +115,7 @@
               type="submit"
               tabindex="9"
               [disabled]="isFormValid">
-              Cadastrar
+              {{isEditMode ? 'Atualizar' : 'Cadastrar'}}
             </button>
           </div>
         </div>

@@ -1,13 +1,15 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {select, Store} from "@ngrx/store";
+import {Subscription} from "rxjs";
+
 import {CustomerGroupService} from "../customer-group.service";
 import {customerGroupNameValidator} from "../customer-group-validators";
+import {Message} from "../../../../shared/message";
 import {CustomerGroup} from "../../../../shared/models/customer-group";
 import * as CustomerGroupActions from '../store/customer-group.actions'
 import * as fromCustomers from '../../store/index';
-import {ActivatedRoute, Router} from "@angular/router";
-import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-customer-group-edit',
@@ -16,9 +18,10 @@ import {Subscription} from "rxjs";
 })
 export class CustomerGroupEditComponent implements OnInit, OnDestroy {
 
+  private storeSub: Subscription;
+  public message: Message;
   public customerGroupForm: FormGroup;
   public isEditMode: boolean;
-  private storeSub: Subscription;
 
   get nameFormControl(): FormControl  {
     return this.customerGroupForm.get('name') as FormControl;
@@ -42,26 +45,26 @@ export class CustomerGroupEditComponent implements OnInit, OnDestroy {
     // Verificando se existe um id na rota, que indica que é uma edição
     this.isEditMode = !!this.route.snapshot.params.id;
 
-    if (this.isEditMode) {
-      this.storeSub = this.store.pipe( select(fromCustomers.getCustomerGroupState))
-        .subscribe(customerGroupState => {
-          const currentCustomerGroup = customerGroupState.current;
+    this.storeSub = this.store.pipe( select(fromCustomers.getCustomerGroupState))
+      .subscribe(customerGroupState => {
+        this.message = customerGroupState.message;
 
+        if (this.isEditMode) {
+          const currentCustomerGroup = customerGroupState.current;
           // Atualizando o form com os valores CustomerGroup
           this.customerGroupForm.patchValue({
             name: currentCustomerGroup?.name,
             status: currentCustomerGroup?.status
           });
-
           // Atualizando o Validator
           this.customerGroupForm.get('name').setAsyncValidators(
             customerGroupNameValidator(this.customerGroupService, currentCustomerGroup?.name)
           );
-        })
-    } else {
-      this.customerGroupForm.get('name')
-        .setAsyncValidators(customerGroupNameValidator(this.customerGroupService, ''))
-    }
+        } else {
+          this.customerGroupForm.get('name')
+            .setAsyncValidators(customerGroupNameValidator(this.customerGroupService, ''));
+        }
+      })
   }
 
   ngOnDestroy(): void {
@@ -80,9 +83,18 @@ export class CustomerGroupEditComponent implements OnInit, OnDestroy {
   }
 
   // Actions
+  public onDismissMessage(): void {
+    this.store.dispatch(CustomerGroupActions.dismissMessage());
+  }
+
   public onSubmit(): void {
     const customerGroup: CustomerGroup = this.customerGroupForm.value;
 
-    this.store.dispatch(CustomerGroupActions.createCustomerGroup({ payload: customerGroup }));
+    if (this.isEditMode) {
+      customerGroup.id = this.route.snapshot.params.id;
+      this.store.dispatch(CustomerGroupActions.updateCustomerGroup({ payload: customerGroup }));
+    } else {
+      this.store.dispatch(CustomerGroupActions.createCustomerGroup({ payload: customerGroup }));
+    }
   }
 }

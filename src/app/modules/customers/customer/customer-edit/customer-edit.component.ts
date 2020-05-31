@@ -1,13 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {select, Store} from "@ngrx/store";
+import {Subscription} from "rxjs";
 import {Person} from "../../../../shared/models/enum/person";
 import {CustomerGroup} from "../../../../shared/models/customer-group";
 import {Customer} from "../../../../shared/models/customer";
+import {Message} from "../../../../shared/message";
 import {cpfCpnjAsyncValidator} from "../customer-validators";
 import {CustomerService} from "../customer.service";
-import {Subscription} from "rxjs";
 import * as CustomerActions from '../store/customer.actions';
 import * as fromCustomers from '../../store/index';
 
@@ -16,11 +17,12 @@ import * as fromCustomers from '../../store/index';
   templateUrl: './customer-edit.component.html',
   styleUrls: ['../../customers.component.scss']
 })
-export class CustomerEditComponent implements OnInit {
+export class CustomerEditComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   private storeSub: Subscription;
-  public customerForm: FormGroup;
   public isEditMode: boolean;
+  public message: Message;
+  public customerForm: FormGroup;
   public cpfCnpjTitle = 'CPF';
   public rgIeTitle = 'RG';
   public customerGroups: CustomerGroup[] = [];
@@ -42,7 +44,7 @@ export class CustomerEditComponent implements OnInit {
     return this.rgIeTitle === 'RG' ? '00.000.000-0' : '000.000.000.000';
   }
 
-  get isFormValid(): boolean {
+  public get isFormValid(): boolean {
     const { dirty, invalid, pending } = this.customerForm;
     return (invalid || dirty && invalid || pending);
   }
@@ -51,7 +53,8 @@ export class CustomerEditComponent implements OnInit {
     private fb: FormBuilder,
     private store: Store<fromCustomers.State>,
     private route: ActivatedRoute,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private changeDetector: ChangeDetectorRef
     ) { }
 
   ngOnInit(): void {
@@ -59,11 +62,13 @@ export class CustomerEditComponent implements OnInit {
     // Verificando se existe um id na rota, que indica que é uma edição
     this.isEditMode = !!this.route.snapshot.params?.id;
 
-    if (this.isEditMode) {
-      this.storeSub = this.store.pipe( select(fromCustomers.getCustomerState) )
-        .subscribe( customerState => {
-          const currentCustomer = customerState.current;
+    this.storeSub = this.store.pipe( select(fromCustomers.getCustomerState) )
+      .subscribe( customerState => {
 
+        this.message = customerState.message;
+
+        if (this.isEditMode) {
+          const currentCustomer = customerState.current;
           // Atualizando o form com os valores CustomerGroup
           this.customerForm.patchValue({
             name: currentCustomer?.name,
@@ -75,17 +80,16 @@ export class CustomerEditComponent implements OnInit {
             status: currentCustomer?.status,
             phones: currentCustomer?.phones ? currentCustomer.phones : []
           });
-
           // Atualizando o Validator
           this.customerForm.get('cpfCnpj').setAsyncValidators(
             cpfCpnjAsyncValidator(this.customerService, currentCustomer?.cpfCnpj)
           );
-        })
-    } else {
-      this.customerForm.get('cpfCnpj').setAsyncValidators(
-        cpfCpnjAsyncValidator(this.customerService, '')
-      );
-    }
+        } else {
+          this.customerForm.get('cpfCnpj').setAsyncValidators(
+            cpfCpnjAsyncValidator(this.customerService, '')
+          );
+        }
+    })
 
     // Recebendo o valor da ação disparada pelo CustomerGroupsResolver e atribuindo os grupos disponíveis no formulário
     this.store.pipe(select(fromCustomers.getCustomerGroupState))
@@ -96,6 +100,17 @@ export class CustomerEditComponent implements OnInit {
         this.customerForm.get('customerGroup').enable();
       }
     });
+  }
+
+  ngAfterViewChecked(){
+    // Necessário devido ao [mask] ser atualizado depois do Change Detection
+    this.changeDetector.detectChanges();
+  }
+
+  ngOnDestroy(): void {
+    if (this.storeSub) {
+      this.storeSub.unsubscribe();
+    }
   }
 
   private createForm(): void {
@@ -141,13 +156,23 @@ export class CustomerEditComponent implements OnInit {
     this.phoneControls.removeAt(index)
   }
 
-  public onSubmit() {
+  public onDismissMessage(): void {
+    this.store.dispatch(CustomerActions.dismissMessage());
+  }
+
+  public onSubmit(): void {
     const customer: Customer = {
       ...this.customerForm.value,
       phones: [...this.customerForm.value.phones],
       registerDate: new Date(this.customerForm.value.registerDate).getTime(),
       customerGroup: this.customerGroups[this.customerForm.value.customerGroup]
     }
-    this.store.dispatch(CustomerActions.createCustomer({ payload: customer }))
+
+    if (this.isEditMode) {
+      customer.id = this.route.snapshot.params.id;
+      this.store.dispatch(CustomerActions.updateCustomer({ payload: customer }))
+    } else {
+      this.store.dispatch(CustomerActions.createCustomer({ payload: customer }))
+    }
   }
 }

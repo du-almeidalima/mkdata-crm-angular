@@ -59,7 +59,24 @@ export class CustomerEffect {
       return this.http.post<CustomerResponse>( this.CUSTOMER_URL, customerPost )
         .pipe(
           map(resp => {
-            return this.handleCustomerPostSuccess(resp);
+            return this.handleCustomerPostPutSuccess(resp);
+          }),
+          catchError((errResp: HttpErrorResponse) => {
+            return this.handleCustomerError(errResp);
+          })
+        )
+    })
+  );
+
+  @Effect()
+  updateCustomer = this.actions$.pipe(
+    ofType(CustomerActions.updateCustomer),
+    switchMap(props  => {
+      const customerPost = CustomersMapper.mapCustomerToCustomerPost(props.payload);
+      return this.http.put<CustomerResponse>( `${this.CUSTOMER_URL}/${props.payload.id}`, customerPost )
+        .pipe(
+          map(resp => {
+            return this.handleCustomerPostPutSuccess(resp);
           }),
           catchError((errResp: HttpErrorResponse) => {
             return this.handleCustomerError(errResp);
@@ -79,7 +96,7 @@ export class CustomerEffect {
   );
 
   // Handlers
-  handleCustomerPostSuccess(customerResp: CustomerResponse) {
+  handleCustomerPostPutSuccess(customerResp: CustomerResponse) {
     return CustomerActions.fetchCustomer({ payload: customerResp.id, redirect: true });
   }
 

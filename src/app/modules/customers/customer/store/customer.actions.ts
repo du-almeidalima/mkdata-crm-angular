@@ -34,7 +34,8 @@ export const deleteCustomer = createAction(
 );
 
 export const updateCustomer = createAction(
-  CustomerActionTypes.UpdateCustomer
+  CustomerActionTypes.UpdateCustomer,
+  props<{ payload: Customer }>()
 );
 
 export const customerError = createAction(
