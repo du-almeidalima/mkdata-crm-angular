@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import {CustomerGroupService} from "../customer-group.service";
 import {customerGroupNameValidator} from "../customer-group-validators";
-import * as CustomerGroupActions from '../store/customer-group.actions';
 import * as fromCustomers from '../../store/index';
 
 @Component({
@@ -19,6 +18,12 @@ export class CustomerGroupEditComponent implements OnInit {
     return this.customerGroupForm.get('name') as FormControl;
   };
 
+  get isFormValid(): boolean {
+    const { pristine, dirty, invalid, pending } = this.customerGroupForm;
+
+    return (pristine || (dirty && invalid) || pending);
+  }
+
   constructor(
     private store: Store<fromCustomers.State>,
     private fb: FormBuilder,
@@ -30,11 +35,11 @@ export class CustomerGroupEditComponent implements OnInit {
 
   private createForm(): void {
     this.customerGroupForm = this.fb.group({
-      name: this.fb.control('', {
+      name: ['', {
         validators: [Validators.required],
         asyncValidators: [customerGroupNameValidator(this.customerGroupService)]
-      }),
-      status: this.fb.control(true)
+      }],
+      status: [true]
     })
   }
 

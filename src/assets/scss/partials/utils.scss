@@ -32,6 +32,13 @@
   @extend .center-x;
 }
 
+.form-error-message {
+  position: absolute;
+  top: 35px;
+  color: #f44336;
+  font-size: 75%;
+}
+
 /* Media Variables */
 $tiny: 320px;
 $small: 480px;

@@ -38,6 +38,12 @@ export class CustomerEditComponent implements OnInit {
     return this.rgIeTitle === 'RG' ? '00.000.000-0' : '000.000.000.000';
   }
 
+  get isFormValid(): boolean {
+    const { pristine, dirty, invalid, pending } = this.customerForm;
+
+    return (pristine || (dirty && invalid) || pending);
+  }
+
   constructor(
     private fb: FormBuilder,
     private store: Store<fromCustomers.State>,
@@ -56,6 +62,11 @@ export class CustomerEditComponent implements OnInit {
         this.customerForm.get('customerGroup').enable();
       }
     })
+
+    const input  = this.customerForm.get('cpfCnpj');
+    input.valueChanges.subscribe(value => {
+      console.log(cpfCpnjAsyncValidator(value).call(input))
+    })
   }
 
   private createForm(): void {
@@ -64,8 +75,7 @@ export class CustomerEditComponent implements OnInit {
       type: [Person.FISICA, Validators.required],
       cpfCnpj: ['', {
         validators: [Validators.required],
-        asyncValidators: [cpfCpnjAsyncValidator(this.customerService)],
-        updateOn: 'blur'
+        asyncValidators: [cpfCpnjAsyncValidator(this.customerService)]
       }],
       rgIe: [''],
       registerDate: [new Date()],

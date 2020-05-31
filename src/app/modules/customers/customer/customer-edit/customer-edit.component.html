@@ -18,7 +18,12 @@
             </mat-radio-group>
           </div>
           <!-- CPF/CNPJ -->
-          <mat-form-field appearance="standard" class="col-12 col-sm-6">
+          <mat-form-field
+            appearance="standard"
+            class="col-12 col-sm-6"
+            [ngClass]="(cpfCnpjFormControl.invalid && cpfCnpjFormControl.dirty && cpfCnpjFormControl.value.length > 10)
+            ? 'mat-form-field-invalid' : ''"
+          >
             <mat-label>{{cpfCnpjTitle}}</mat-label>
             <input formControlName="cpfCnpj"
                    matInput
@@ -26,9 +31,9 @@
                    [mask]="cpfCnpjMask"
                    required
                    tabindex="4">
-            <mat-error *ngIf="cpfCnpjFormControl.hasError('cpfCnpjExists')">
+            <div class="form-error-message" *ngIf="cpfCnpjFormControl.hasError('cpfCnpjExists')">
               Este {{cpfCnpjTitle}} já está em uso.
-            </mat-error>
+            </div>
           </mat-form-field>
           <!-- RG/IE-->
           <mat-form-field appearance="standard" class="col-12 col-sm-6">
@@ -107,7 +112,7 @@
               mat-flat-button
               type="submit"
               tabindex="9"
-              [disabled]="customerForm.untouched || (customerForm.touched && customerForm.invalid)">
+              [disabled]="isFormValid">
               Cadastrar
             </button>
           </div>
