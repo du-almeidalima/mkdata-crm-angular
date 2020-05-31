@@ -34,7 +34,7 @@ export const getCustomerState = createSelector(
   state => state.customer
 )
 
-export const getCustomerGroups = createSelector(
+export const getCustomerGroupState = createSelector(
   getCustomerFeatureState,
-  state => state.customerGroup.customerGroups
+  state => state.customerGroup
 )

@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public userName: string;
   public readonly features: FeatureCard[] = [
     { subTitle: 'Cadastrar Cliente', imgUrl: 'assets/img/cliente.png', actionLink: '/clientes/cliente' },
-    { subTitle: 'Cadastrar Grupo de Clientes', imgUrl: 'assets/img/cliente-grupo.png', actionLink: '/clientes/grupo' },
+    { subTitle: 'Cadastrar Grupo de Clientes', imgUrl: 'assets/img/grupo-clientes.png', actionLink: '/clientes/grupo' },
     { subTitle: 'Consultar Clientes', imgUrl: 'assets/img/pesquisar-cliente.png', actionLink: '/clientes/consulta' }
   ];
 

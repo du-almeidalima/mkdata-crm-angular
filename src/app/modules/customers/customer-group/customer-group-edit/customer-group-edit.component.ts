@@ -3,12 +3,14 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import {CustomerGroupService} from "../customer-group.service";
 import {customerGroupNameValidator} from "../customer-group-validators";
+import {CustomerGroup} from "../../../../shared/models/customer-group";
+import * as CustomerGroupActions from '../store/customer-group.actions'
 import * as fromCustomers from '../../store/index';
 
 @Component({
   selector: 'app-customer-group-edit',
   templateUrl: './customer-group-edit.component.html',
-  styleUrls: ['./customer-group-edit.component.scss']
+  styleUrls: ['../../customers.component.scss']
 })
 export class CustomerGroupEditComponent implements OnInit {
 
@@ -44,8 +46,8 @@ export class CustomerGroupEditComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    const customerGroup = this.customerGroupForm.value;
+    const customerGroup: CustomerGroup = this.customerGroupForm.value;
 
-    console.log(customerGroup)
+    this.store.dispatch(CustomerGroupActions.createCustomerGroup({ payload: customerGroup }));
   }
 }

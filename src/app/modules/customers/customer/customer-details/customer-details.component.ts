@@ -10,7 +10,7 @@ import * as fromCustomers from '../../store/index';
 @Component({
   selector: 'app-customer-details',
   templateUrl: './customer-details.component.html',
-  styleUrls: ['./customer-details.component.scss']
+  styleUrls: ['../../customers.component.scss']
 })
 export class CustomerDetailsComponent implements OnInit, OnDestroy {
 
@@ -19,7 +19,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   private storeSub: Subscription;
 
   get registryDateParsed(): string {
-    return new Date(this.customer.registerDate).toLocaleString('pt-BR', { timeZone: 'UTC'})
+    return new Date(this.customer.registerDate).toLocaleString('pt-BR', { timeZone: 'UTC' })
   }
 
 

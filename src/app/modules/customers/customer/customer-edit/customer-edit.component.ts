@@ -12,7 +12,7 @@ import * as fromCustomers from '../../store/index';
 @Component({
   selector: 'app-customer-edit',
   templateUrl: './customer-edit.component.html',
-  styleUrls: ['./customer-edit.component.scss']
+  styleUrls: ['../../customers.component.scss']
 })
 export class CustomerEditComponent implements OnInit {
 
@@ -53,10 +53,9 @@ export class CustomerEditComponent implements OnInit {
   ngOnInit(): void {
     this.createForm();
     // Recebendo o valor da ação disparada pelo CustomerGroupResolver e atribuindo os grupos disponíveis no formulário
-    this.store.pipe(
-      select(fromCustomers.getCustomerGroups)
-    ).subscribe( customerGroups => {
-      this.customerGroups = customerGroups;
+    this.store.pipe(select(fromCustomers.getCustomerGroupState))
+      .subscribe( customerGroupState => {
+      this.customerGroups = customerGroupState.customerGroups;
       // Ativando o select
       if (this.customerGroups.length > 0) {
         this.customerForm.get('customerGroup').enable();

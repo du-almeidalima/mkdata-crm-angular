@@ -51,14 +51,6 @@ export class CustomerEffect {
     })
   );
 
-  @Effect({dispatch: false})
-  setCustomer = this.actions$.pipe(
-    ofType(CustomerActions.CustomerActionTypes.SetCustomer),
-    tap((props: { payload: Customer }) => {
-      this.router.navigate(['/clientes','cliente', props.payload.id])
-    })
-  );
-
   @Effect()
   createCustomer = this.actions$.pipe(
     ofType(CustomerActions.createCustomer),
@@ -74,7 +66,15 @@ export class CustomerEffect {
           })
         )
     })
-  )
+  );
+
+  @Effect({dispatch: false})
+  setCustomer = this.actions$.pipe(
+    ofType(CustomerActions.setCustomer),
+    tap((props: { payload: Customer }) => {
+      this.router.navigate(['/clientes','cliente', props.payload.id])
+    })
+  );
 
   // Handlers
   handleCustomerPostSuccess(customerResp: CustomerResponse) {
