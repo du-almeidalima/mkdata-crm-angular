@@ -91,10 +91,12 @@ Para o cadastro de cliente (CustomerEdit) fiz uso do Reactive Forms do Angular, 
 verificar se o CPF/CNPJ já existia. Também utilizei a biblioteca NgxMask para criar as máscaras dos campos.
 O campo Grupos é buscado via API toda vez que a tela de Cadastro e Edição é carregada, para sempre ter valores atualizados.
 
-Um Detalhe, que devido a estar utilizando Spring Data REST como API, a inserção de relacionamentos OneToMany e ManyToMany são feitas
+Um Detalhe, que devido a estar usando Spring Data REST como API, a inserção de relacionamentos OneToMany e ManyToMany são feitas
 por URL, por exemplo, para inserir uma entidade CustomerGroup a um Customer foi necessário passar o URL deste CustomerGroup
 por exemplo como propriedade no campo `customerGroup: 'http://localhost:4300/api/customer-groups/2'` do cliente a ser enviado. Para
 esse tipo de transação, o Util CustomerMapper foi criado.
+
+Um Async Validator foi criado tanto para Customer quanto para o CustomerGroup a fim de ver se os campos chaves são únicos.
 
 ## Ferramentas
 

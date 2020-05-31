@@ -17,7 +17,7 @@ import * as fromCustomers from '../../store/index';
   templateUrl: './customer-edit.component.html',
   styleUrls: ['../../customers.component.scss']
 })
-export class CustomerEditComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class CustomerEditComponent implements OnInit, OnDestroy {
 
   private storeSub: Subscription;
   public isEditMode: boolean;
@@ -53,8 +53,7 @@ export class CustomerEditComponent implements OnInit, OnDestroy, AfterViewChecke
     private fb: FormBuilder,
     private store: Store<fromCustomers.State>,
     private route: ActivatedRoute,
-    private customerService: CustomerService,
-    private changeDetector: ChangeDetectorRef
+    private customerService: CustomerService
     ) { }
 
   ngOnInit(): void {
@@ -100,11 +99,6 @@ export class CustomerEditComponent implements OnInit, OnDestroy, AfterViewChecke
         this.customerForm.get('customerGroup').enable();
       }
     });
-  }
-
-  ngAfterViewChecked(){
-    // Necessário devido ao [mask] ser atualizado depois do Change Detection
-    this.changeDetector.detectChanges();
   }
 
   ngOnDestroy(): void {

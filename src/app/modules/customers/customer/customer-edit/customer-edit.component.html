@@ -24,8 +24,6 @@
           <mat-form-field
             appearance="standard"
             class="col-12 col-sm-6"
-            [ngClass]="(cpfCnpjFormControl.invalid && cpfCnpjFormControl.dirty && cpfCnpjFormControl.value?.length > 10)
-            ? 'mat-form-field-invalid' : ''"
           >
             <mat-label>{{cpfCnpjTitle}}</mat-label>
             <input formControlName="cpfCnpj"
