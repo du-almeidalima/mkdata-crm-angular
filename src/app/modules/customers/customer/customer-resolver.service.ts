@@ -1,6 +1,10 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from "@angular/router";
 import {Store} from "@ngrx/store";
+import {Observable} from "rxjs";
+import {map, take} from "rxjs/operators";
+import {Actions, ofType} from "@ngrx/effects";
+import {Customer} from "../../../shared/models/customer";
 import * as fromCustomers from '../store/index';
 import * as CustomerActions from './store/customer.actions';
 
@@ -8,11 +12,22 @@ import * as CustomerActions from './store/customer.actions';
 @Injectable({
   providedIn: 'root'
 })
-export class CustomerResolver implements Resolve<void>{
+export class CustomerResolver implements Resolve<Customer>{
 
-  constructor(private store: Store<fromCustomers.CustomersState>) { }
+  constructor(
+    private store: Store<fromCustomers.CustomersState>,
+    private actions$: Actions) { }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): void {
-    this.store.dispatch(CustomerActions.fetchCustomer({ payload: route.params.id }));
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
+    Observable<Customer> | Promise<Customer> | Customer {
+
+    const id = route.params?.id;
+    this.store.dispatch(CustomerActions.fetchCustomer({ payload: id, redirect: false }));
+
+    return this.actions$.pipe(
+      take(1),
+      ofType(CustomerActions.setCustomer),
+      map(props => props.payload)
+    );
   }
 }

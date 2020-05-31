@@ -42,7 +42,7 @@ export class CustomerEffect {
       return forkJoin(resp)
       .pipe(
         map(resp => {
-          return this.handleCustomerGetSuccess(resp);
+          return this.handleCustomerGetSuccess(resp, props.redirect);
         }),
         catchError( errResp => {
           return this.handleCustomerError(errResp);
@@ -71,23 +71,25 @@ export class CustomerEffect {
   @Effect({dispatch: false})
   setCustomer = this.actions$.pipe(
     ofType(CustomerActions.setCustomer),
-    tap((props: { payload: Customer }) => {
-      this.router.navigate(['/clientes','cliente', props.payload.id])
+    tap(props => {
+      if (props.redirect) {
+        this.router.navigate(['/clientes','cliente', props.payload.id])
+      }
     })
   );
 
   // Handlers
   handleCustomerPostSuccess(customerResp: CustomerResponse) {
-    return CustomerActions.fetchCustomer({ payload: customerResp.id });
+    return CustomerActions.fetchCustomer({ payload: customerResp.id, redirect: true });
   }
 
-  handleCustomerGetSuccess(resp:{ customer: CustomerResponse, customerGroup: CustomerGroupResponse }) {
+  handleCustomerGetSuccess(resp:{ customer: CustomerResponse, customerGroup: CustomerGroupResponse }, redirect: boolean) {
     const customer: Customer = {
       ...resp.customer,
       customerGroup: (resp.customerGroup as CustomerGroup),
       registerDate: +resp.customer.registerDate
     }
-    return CustomerActions.setCustomer({ payload: customer });
+    return CustomerActions.setCustomer({ payload: customer, redirect });
   }
 
   handleCustomerError(errResp: HttpErrorResponse) {

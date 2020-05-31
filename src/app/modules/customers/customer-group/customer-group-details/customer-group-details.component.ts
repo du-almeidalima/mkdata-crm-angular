@@ -36,7 +36,7 @@ export class CustomerGroupDetailsComponent implements OnInit, OnDestroy {
   }
 
   onEditUser(): void {
-    this.router.navigate(['/clientes','cliente',this.customerGroup.id,'edit'])
+    this.router.navigate(['/clientes','grupo',this.customerGroup.id,'edit'])
   }
 
   onDeleteUser(): void {

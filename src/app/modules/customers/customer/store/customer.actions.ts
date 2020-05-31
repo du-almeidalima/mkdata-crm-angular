@@ -15,12 +15,12 @@ export enum CustomerActionTypes {
 // Customer Actions
 export const fetchCustomer = createAction(
   CustomerActionTypes.FetchCustomer,
-  props<{ payload: number }>()
+  props<{ payload: number, redirect: boolean }>()
 );
 
 export const setCustomer = createAction(
   CustomerActionTypes.SetCustomer,
-  props<{ payload: Customer }>()
+  props<{ payload: Customer, redirect: boolean }>()
 );
 
 export const createCustomer = createAction(

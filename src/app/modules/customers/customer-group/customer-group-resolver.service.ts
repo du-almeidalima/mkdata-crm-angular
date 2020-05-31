@@ -3,7 +3,7 @@ import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from "@angular/rou
 import {Store} from "@ngrx/store";
 import {Actions, ofType} from "@ngrx/effects";
 import {Observable} from "rxjs";
-import {take} from "rxjs/operators";
+import {map, take} from "rxjs/operators";
 
 import {CustomerGroup} from "../../../shared/models/customer-group";
 import * as CustomerGroupActions from './store/customer-group.actions';
@@ -26,8 +26,9 @@ export class CustomerGroupResolver implements Resolve<CustomerGroup>{
     this.store.dispatch(CustomerGroupActions.fetchCustomerGroup({ payload: id, redirect: false }));
 
     return this.actions$.pipe(
+      take(1),
       ofType(CustomerGroupActions.setCustomerGroup),
-      take(1)
+      map(props => props.payload)
     );
   }
 }

@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-12 col-md-10 center-x">
     <section class="white-container">
-      <h1 class="text-center">Cadastrar Grupo de Clientes</h1>
+      <h1 class="text-center">{{isEditMode ? 'Atualizar' : 'Cadastrar'}} Grupo de Clientes</h1>
       <form [formGroup]="customerGroupForm" (ngSubmit)="onSubmit()">
         <div class="row">
           <!-- Group Name -->

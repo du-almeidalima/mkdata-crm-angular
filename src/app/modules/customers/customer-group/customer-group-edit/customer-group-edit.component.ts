@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {select, Store} from "@ngrx/store";
 import {CustomerGroupService} from "../customer-group.service";
@@ -14,7 +14,7 @@ import {Subscription} from "rxjs";
   templateUrl: './customer-group-edit.component.html',
   styleUrls: ['../../customers.component.scss']
 })
-export class CustomerGroupEditComponent implements OnInit {
+export class CustomerGroupEditComponent implements OnInit, OnDestroy {
 
   public customerGroupForm: FormGroup;
   public isEditMode: boolean;
@@ -25,9 +25,8 @@ export class CustomerGroupEditComponent implements OnInit {
   };
 
   get isFormValid(): boolean {
-    const { pristine, dirty, invalid, pending } = this.customerGroupForm;
-
-    return (pristine || (dirty && invalid) || pending);
+    const { dirty, invalid, pending } = this.customerGroupForm;
+    return (invalid || dirty && invalid || pending);
   }
 
   constructor(
@@ -48,6 +47,7 @@ export class CustomerGroupEditComponent implements OnInit {
         .subscribe(customerGroupState => {
           const currentCustomerGroup = customerGroupState.current;
 
+          // Atualizando o form com os valores CustomerGroup
           this.customerGroupForm.patchValue({
             name: currentCustomerGroup?.name,
             status: currentCustomerGroup?.status
@@ -61,6 +61,12 @@ export class CustomerGroupEditComponent implements OnInit {
     } else {
       this.customerGroupForm.get('name')
         .setAsyncValidators(customerGroupNameValidator(this.customerGroupService, ''))
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.storeSub) {
+       this.storeSub.unsubscribe();
     }
   }
 

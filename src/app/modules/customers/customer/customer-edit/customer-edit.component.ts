@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {select, Store} from "@ngrx/store";
 import {Person} from "../../../../shared/models/enum/person";
@@ -6,9 +7,9 @@ import {CustomerGroup} from "../../../../shared/models/customer-group";
 import {Customer} from "../../../../shared/models/customer";
 import {cpfCpnjAsyncValidator} from "../customer-validators";
 import {CustomerService} from "../customer.service";
+import {Subscription} from "rxjs";
 import * as CustomerActions from '../store/customer.actions';
 import * as fromCustomers from '../../store/index';
-import {ActivatedRoute, Params} from "@angular/router";
 
 @Component({
   selector: 'app-customer-edit',
@@ -17,6 +18,7 @@ import {ActivatedRoute, Params} from "@angular/router";
 })
 export class CustomerEditComponent implements OnInit {
 
+  private storeSub: Subscription;
   public customerForm: FormGroup;
   public isEditMode: boolean;
   public cpfCnpjTitle = 'CPF';
@@ -41,8 +43,8 @@ export class CustomerEditComponent implements OnInit {
   }
 
   get isFormValid(): boolean {
-    const { pristine, dirty, invalid, pending } = this.customerForm;
-    return (pristine || (dirty && invalid) || pending);
+    const { dirty, invalid, pending } = this.customerForm;
+    return (invalid || dirty && invalid || pending);
   }
 
   constructor(
@@ -55,9 +57,36 @@ export class CustomerEditComponent implements OnInit {
   ngOnInit(): void {
     this.createForm();
     // Verificando se existe um id na rota, que indica que é uma edição
-    this.route.params.subscribe((params: Params) => {
-      this.isEditMode = !!params?.id;
-    })
+    this.isEditMode = !!this.route.snapshot.params?.id;
+
+    if (this.isEditMode) {
+      this.storeSub = this.store.pipe( select(fromCustomers.getCustomerState) )
+        .subscribe( customerState => {
+          const currentCustomer = customerState.current;
+
+          // Atualizando o form com os valores CustomerGroup
+          this.customerForm.patchValue({
+            name: currentCustomer?.name,
+            type: currentCustomer?.type,
+            cpfCnpj: currentCustomer?.cpfCnpj,
+            rgIe: currentCustomer?.rgIe,
+            registerDate: new Date(currentCustomer?.registerDate),
+            customerGroup: currentCustomer?.customerGroup.id,
+            status: currentCustomer?.status,
+            phones: currentCustomer?.phones ? currentCustomer.phones : []
+          });
+
+          // Atualizando o Validator
+          this.customerForm.get('cpfCnpj').setAsyncValidators(
+            cpfCpnjAsyncValidator(this.customerService, currentCustomer?.cpfCnpj)
+          );
+        })
+    } else {
+      this.customerForm.get('cpfCnpj').setAsyncValidators(
+        cpfCpnjAsyncValidator(this.customerService, '')
+      );
+    }
+
     // Recebendo o valor da ação disparada pelo CustomerGroupsResolver e atribuindo os grupos disponíveis no formulário
     this.store.pipe(select(fromCustomers.getCustomerGroupState))
       .subscribe( customerGroupState => {
@@ -74,8 +103,7 @@ export class CustomerEditComponent implements OnInit {
       name: ['', Validators.required],
       type: [Person.FISICA, Validators.required],
       cpfCnpj: ['', {
-        validators: [Validators.required],
-        asyncValidators: [cpfCpnjAsyncValidator(this.customerService)]
+        validators: [Validators.required]
       }],
       rgIe: [''],
       registerDate: [new Date()],

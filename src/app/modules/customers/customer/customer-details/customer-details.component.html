@@ -2,7 +2,7 @@
   <!-- Message -->
   <ngb-alert *ngIf="message" [type]="message.severity" (close)="onDismissMessage()">{{ message.content }}</ngb-alert>
   <!-- Customer Actions -->
-  <div class="app-customer-details-actions">
+  <div class="app-customer-details-actions" *ngIf="customer">
     <button class="text-warning" mat-icon-button (click)="onEditUser()">
       <mat-icon fontSet="fa" fontIcon="fa-user-edit"></mat-icon>
     </button>

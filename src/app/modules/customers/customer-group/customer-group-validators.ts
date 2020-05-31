@@ -10,6 +10,7 @@ import {CustomerGroupService} from "./customer-group.service";
  */
 export const customerGroupNameValidator = (customerGroupService: CustomerGroupService, currentName: string): AsyncValidatorFn => {
   return control => {
+
     if (control.value === currentName) {
       return of(null);
     }
