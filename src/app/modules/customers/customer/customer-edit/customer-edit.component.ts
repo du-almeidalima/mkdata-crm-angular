@@ -8,6 +8,7 @@ import {cpfCpnjAsyncValidator} from "../customer-validators";
 import {CustomerService} from "../customer.service";
 import * as CustomerActions from '../store/customer.actions';
 import * as fromCustomers from '../../store/index';
+import {ActivatedRoute, Params} from "@angular/router";
 
 @Component({
   selector: 'app-customer-edit',
@@ -17,6 +18,7 @@ import * as fromCustomers from '../../store/index';
 export class CustomerEditComponent implements OnInit {
 
   public customerForm: FormGroup;
+  public isEditMode: boolean;
   public cpfCnpjTitle = 'CPF';
   public rgIeTitle = 'RG';
   public customerGroups: CustomerGroup[] = [];
@@ -40,19 +42,23 @@ export class CustomerEditComponent implements OnInit {
 
   get isFormValid(): boolean {
     const { pristine, dirty, invalid, pending } = this.customerForm;
-
     return (pristine || (dirty && invalid) || pending);
   }
 
   constructor(
     private fb: FormBuilder,
     private store: Store<fromCustomers.State>,
+    private route: ActivatedRoute,
     private customerService: CustomerService
     ) { }
 
   ngOnInit(): void {
     this.createForm();
-    // Recebendo o valor da ação disparada pelo CustomerGroupResolver e atribuindo os grupos disponíveis no formulário
+    // Verificando se existe um id na rota, que indica que é uma edição
+    this.route.params.subscribe((params: Params) => {
+      this.isEditMode = !!params?.id;
+    })
+    // Recebendo o valor da ação disparada pelo CustomerGroupsResolver e atribuindo os grupos disponíveis no formulário
     this.store.pipe(select(fromCustomers.getCustomerGroupState))
       .subscribe( customerGroupState => {
       this.customerGroups = customerGroupState.customerGroups;
@@ -60,7 +66,7 @@ export class CustomerEditComponent implements OnInit {
       if (this.customerGroups.length > 0) {
         this.customerForm.get('customerGroup').enable();
       }
-    })
+    });
   }
 
   private createForm(): void {

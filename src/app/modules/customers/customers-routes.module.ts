@@ -8,6 +8,7 @@ import {CustomerEditComponent} from "./customer/customer-edit/customer-edit.comp
 import {CustomerDetailsComponent} from "./customer/customer-details/customer-details.component";
 import {CustomerGroupDetailsComponent} from "./customer-group/customer-group-details/customer-group-details.component";
 import {CustomerGroupEditComponent} from "./customer-group/customer-group-edit/customer-group-edit.component";
+import {CustomerGroupsResolver} from "./customer-group/customer-groups-resolver.service";
 import {CustomerGroupResolver} from "./customer-group/customer-group-resolver.service";
 import {CustomerResolver} from "./customer/customer-resolver.service";
 
@@ -19,8 +20,8 @@ const CUSTOMERS_ROUTES: Routes = [
         { path: 'consulta/:term', component: SearchComponent},
         { path: 'cliente', component: CustomersComponent, children:
             [
-              { path: 'cadastro', component: CustomerEditComponent, resolve: [CustomerGroupResolver] },
-              { path: ':id/edit', component: CustomerEditComponent, resolve: [CustomerGroupResolver, CustomerResolver] },
+              { path: 'cadastro', component: CustomerEditComponent, resolve: [CustomerGroupsResolver] },
+              { path: ':id/edit', component: CustomerEditComponent, resolve: [CustomerGroupsResolver, CustomerResolver] },
               { path: ':id', component: CustomerDetailsComponent, resolve: [CustomerResolver] },
               { path: '', redirectTo: 'cadastro', pathMatch: 'full' },
             ]
@@ -28,8 +29,8 @@ const CUSTOMERS_ROUTES: Routes = [
         { path: 'grupo', component: CustomerGroupComponent, children:
             [
               { path: 'cadastro', component: CustomerGroupEditComponent },
-              { path: ':id/edit', component: CustomerGroupEditComponent },
-              { path: ':id', component: CustomerGroupDetailsComponent },
+              { path: ':id/edit', component: CustomerGroupEditComponent, resolve: [CustomerGroupResolver]},
+              { path: ':id', component: CustomerGroupDetailsComponent, resolve: [CustomerGroupResolver] },
               { path: '', redirectTo: 'cadastro', pathMatch: 'full' },
             ]
         },

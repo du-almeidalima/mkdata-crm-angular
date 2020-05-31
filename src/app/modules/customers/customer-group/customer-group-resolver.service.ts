@@ -1,20 +1,33 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from "@angular/router";
 import {Store} from "@ngrx/store";
-import * as fromCustomers from '../store/index';
-import * as CustomerGroupActions from './store/customer-group.actions';
+import {Actions, ofType} from "@ngrx/effects";
+import {Observable} from "rxjs";
+import {take} from "rxjs/operators";
 
-/* Essa classe assegura que sempre que uma rota for carregada a property "customerGroups" do State "CustomerGroup"
- * estará carregada;
- */
+import {CustomerGroup} from "../../../shared/models/customer-group";
+import * as CustomerGroupActions from './store/customer-group.actions';
+import * as fromCustomers from "../store";
+
+/* Essa classe assegura que sempre que uma rota for carregada a tera o CustomerGroup passado no :id carregado nela */
 @Injectable({
   providedIn: 'root'
 })
-export class CustomerGroupResolver implements Resolve<void>{
+export class CustomerGroupResolver implements Resolve<CustomerGroup>{
 
-  constructor(private store: Store<fromCustomers.CustomersState>) { }
+  constructor(
+    private store: Store<fromCustomers.CustomersState>,
+    private actions$: Actions) { }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): void {
-    this.store.dispatch(CustomerGroupActions.fetchCustomerGroups());
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
+    Observable<CustomerGroup> | Promise<CustomerGroup> | CustomerGroup {
+
+    const id = route.params?.id;
+    this.store.dispatch(CustomerGroupActions.fetchCustomerGroup({ payload: id, redirect: false }));
+
+    return this.actions$.pipe(
+      ofType(CustomerGroupActions.setCustomerGroup),
+      take(1)
+    );
   }
 }
