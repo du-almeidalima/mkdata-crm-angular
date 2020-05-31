@@ -23,7 +23,7 @@ export class CustomerGroupDetailsComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store<fromCustomers.State>,
               private router: Router,
-              public dialog: MatDialog) { }
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.storeSub = this.store.pipe( select(fromCustomers.getFeatureRootState) )
@@ -37,7 +37,9 @@ export class CustomerGroupDetailsComponent implements OnInit, OnDestroy {
     if (this.storeSub) {
       this.storeSub.unsubscribe();
     }
-    this.store.dispatch(CustomerCommonActions.dismissMessage());
+    if (this.message) {
+      this.store.dispatch(CustomerCommonActions.dismissMessage());
+    }
   }
 
   onEditUser(): void {

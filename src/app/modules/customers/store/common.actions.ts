@@ -1,17 +1,17 @@
 import {createAction, props} from "@ngrx/store";
 import {Message} from "../../../shared/message";
 
-export enum CustomersActionTypes {
-  SetMessage = '[Customers] Set Message',
-  DismissMessage = '[Customers] Dismiss Message'
+export enum CustomerCommonActionTypes {
+  SetMessage = '[Customer Common] Set Message',
+  DismissMessage = '[Customer Common] Dismiss Message'
 }
 
 // Customers Actions
 export const setMessage = createAction(
-  CustomersActionTypes.SetMessage,
+  CustomerCommonActionTypes.SetMessage,
   props<{ payload: Message }>()
 );
 
 export const dismissMessage = createAction(
-  CustomersActionTypes.DismissMessage
+  CustomerCommonActionTypes.DismissMessage
 );

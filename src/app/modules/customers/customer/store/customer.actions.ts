@@ -27,7 +27,7 @@ export const createCustomer = createAction(
 
 export const deleteCustomer = createAction(
   CustomerActionTypes.DeleteCustomer,
-  props<{ }>()
+  props<{ payload: number }>()
 );
 
 export const updateCustomer = createAction(

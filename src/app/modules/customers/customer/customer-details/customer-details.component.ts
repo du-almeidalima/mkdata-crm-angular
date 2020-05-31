@@ -4,9 +4,11 @@ import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
 import {Customer} from "../../../../shared/models/customer";
 import {Message} from "../../../../shared/message";
-import * as CustomerActions from "../store/customer.actions";
 import * as CustomerCommonActions from '../../store/common.actions';
 import * as fromCustomers from '../../store/index';
+import * as CustomerActions from "../store/customer.actions";
+import {ConfirmDialogComponent} from "../../../../shared/components/confirm-dialog/confirm-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-customer-details',
@@ -23,10 +25,10 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     return new Date(this.customer.registerDate).toLocaleString('pt-BR', { timeZone: 'UTC' })
   }
 
-
   constructor(
     private store: Store<fromCustomers.State>,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -49,9 +51,13 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   }
 
   onDeleteUser(): void {
-    if (window.confirm('Essa ação não terá volta')) {
-      this.store.dispatch(CustomerActions.deleteCustomer({ id: this.customer.id }))
-    }
+    const dialogRef = this.dialog.open(ConfirmDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.store.dispatch(CustomerActions.deleteCustomer({ payload: this.customer.id }))
+      }
+    });
   }
 
   onDismissMessage() {

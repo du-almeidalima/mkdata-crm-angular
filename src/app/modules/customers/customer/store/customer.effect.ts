@@ -85,9 +85,33 @@ export class CustomerEffect {
         )
     })
   );
+
+  @Effect( { dispatch: false } )
+  deleteCustomer = this.actions$.pipe(
+    ofType(CustomerActions.deleteCustomer),
+    switchMap(props  => {
+      return this.http.delete<CustomerGroup>( `${this.CUSTOMER_URL}/${props.payload}`)
+        .pipe(
+          map(() => {
+            return this.handleCustomerGroupDeleteSuccess();
+          }),
+          catchError((errResp: HttpErrorResponse) => {
+            return this.handleCustomerError(errResp);
+          })
+        )
+    })
+  );
+
   // Handlers
   handleCustomerPostPutSuccess(customerResp: CustomerResponse) {
     this.router.navigate(['/clientes','cliente', customerResp.id]);
+  }
+
+  handleCustomerGroupDeleteSuccess() {
+    const message = 'Cliente excluído com sucesso';
+    this.router.navigate(['/clientes']).then(() => {
+      CustomerCommonActions.setMessage( { payload: {severity: Severity.SUCCESS, content: message} });
+    })
   }
 
   handleCustomerGetSuccess(resp:{ customer: CustomerResponse, customerGroup: CustomerGroupResponse }) {
