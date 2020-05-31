@@ -61,11 +61,6 @@ export class CustomerEditComponent implements OnInit {
         this.customerForm.get('customerGroup').enable();
       }
     })
-
-    const input  = this.customerForm.get('cpfCnpj');
-    input.valueChanges.subscribe(value => {
-      console.log(cpfCpnjAsyncValidator(value).call(input))
-    })
   }
 
   private createForm(): void {
@@ -101,6 +96,7 @@ export class CustomerEditComponent implements OnInit {
     })
   }
 
+  // Actions
   public onAddPhone(): void {
     this.phoneControls.push(
       this.fb.control('')

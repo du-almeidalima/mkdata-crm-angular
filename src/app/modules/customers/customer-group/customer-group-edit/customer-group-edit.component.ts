@@ -45,6 +45,7 @@ export class CustomerGroupEditComponent implements OnInit {
     })
   }
 
+  // Actions
   public onSubmit(): void {
     const customerGroup: CustomerGroup = this.customerGroupForm.value;
 
