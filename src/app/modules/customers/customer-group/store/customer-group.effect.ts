@@ -11,8 +11,9 @@ import {CustomerGroupsResponse} from "../../../../shared/models/api/customer-gro
 import {CustomerGroup} from "../../../../shared/models/customer-group";
 import {CustomerGroupResponse} from "../../../../shared/models/api/customer-group-response";
 import {environment as env} from "../../../../../environments/environment";
-import * as fromCustomer from '../../store';
+import * as CustomerCommonActions from '../../store/common.actions';
 import * as CustomerGroupActions from './customer-group.actions';
+import * as fromCustomer from '../../store';
 
 @Injectable()
 export class CustomerGroupEffect {
@@ -90,9 +91,29 @@ export class CustomerGroupEffect {
     })
   )
 
+  @Effect( { dispatch: false } )
+  deleteCustomerGroup = this.actions$.pipe(
+    ofType(CustomerGroupActions.updateCustomerGroup),
+    switchMap(props  => {
+      return this.http.delete<CustomerGroupResponse>( `${this.CUSTOMER_GROUP_URL}/${props.payload.id}`)
+        .pipe(
+          map(() => {
+            return this.handleCustomerGroupDeleteSuccess();
+          }),
+          catchError((errResp: HttpErrorResponse) => {
+            return this.handleCustomerGroupError(errResp);
+          })
+        )
+    })
+  )
+
   // Handlers
   handleCustomerGroupPostPutSuccess(customerGroupResp: CustomerGroupResponse) {
     this.router.navigate(['/clientes','grupo', customerGroupResp.id])
+  }
+
+  handleCustomerGroupDeleteSuccess() {
+    this.router.navigate(['/clientes'])
   }
 
   handleCustomerGroupGetSuccess(customerGroupResp: CustomerGroupResponse) {
@@ -121,6 +142,6 @@ export class CustomerGroupEffect {
       default:
         message = 'Houve um erro durante sua requisição, por favor, reporte essa mensagem.'
     }
-    return of(CustomerGroupActions.customerGroupError( { payload: {severity: Severity.DANGER, content: message} }));
+    return of(CustomerCommonActions.setMessage( { payload: {severity: Severity.DANGER, content: message} }));
   }
 }

@@ -13,13 +13,9 @@ const initialState: CustomerState = {
   message: null
 };
 
-// Auth Reducers
+// Customer Reducers
 const customerReducerCreator = createReducer(initialState,
   on(CustomerActions.setCustomer, (state, props) => ({ ...state, current: props.payload, message: null})),
-  on(CustomerActions.deleteCustomer, state => ({})),
-  on(CustomerActions.updateCustomer, state => ({})),
-  on(CustomerActions.customerError, (state, props) => ({ ...state, message: props.payload})),
-  on(CustomerActions.dismissMessage, state => ({ ...state, message: null }))
 );
 
 export function customerReducer(state: CustomerState | undefined, action: Action) {

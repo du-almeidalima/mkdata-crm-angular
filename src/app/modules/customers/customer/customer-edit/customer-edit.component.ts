@@ -1,4 +1,4 @@
-import {AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {select, Store} from "@ngrx/store";
@@ -10,6 +10,7 @@ import {Message} from "../../../../shared/message";
 import {cpfCpnjAsyncValidator} from "../customer-validators";
 import {CustomerService} from "../customer.service";
 import * as CustomerActions from '../store/customer.actions';
+import * as CustomerCommonActions from '../../store/common.actions';
 import * as fromCustomers from '../../store/index';
 
 @Component({
@@ -151,7 +152,7 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
   }
 
   public onDismissMessage(): void {
-    this.store.dispatch(CustomerActions.dismissMessage());
+    this.store.dispatch(CustomerCommonActions.dismissMessage());
   }
 
   public onSubmit(): void {

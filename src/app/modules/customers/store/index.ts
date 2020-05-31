@@ -2,6 +2,7 @@ import {createFeatureSelector, createSelector} from "@ngrx/store";
 import {CustomerEffect} from "../customer/store/customer.effect";
 import {CustomerGroupEffect} from "../customer-group/store/customer-group.effect";
 import * as fromRoot from '../../../store/app.state';
+import * as fromCustomersCommon from "./common.reducer";
 import * as fromCustomer from "../customer/store/customer.reducer";
 import * as fromCustomerGroup from "../customer-group/store/customer-group.reducer";
 
@@ -12,11 +13,13 @@ export interface State extends fromRoot.AppState{
 
 // Combinando os reducers e states dos subcomponentes
 export interface CustomersState {
-  customer: fromCustomer.CustomerState
-  customerGroup: fromCustomerGroup.CustomerGroupState
+  common: fromCustomersCommon.CustomersCommonState
+  customer: fromCustomer.CustomerState;
+  customerGroup: fromCustomerGroup.CustomerGroupState;
 }
 
 export const customersReducers = {
+  common: fromCustomersCommon.customerReducer,
   customer: fromCustomer.customerReducer,
   customerGroup: fromCustomerGroup.customerGroupReducer
 }
@@ -37,4 +40,9 @@ export const getCustomerState = createSelector(
 export const getCustomerGroupState = createSelector(
   getCustomerFeatureState,
   state => state.customerGroup
+)
+
+export const getFeatureRootState= createSelector(
+  getCustomerFeatureState,
+  state => state
 )

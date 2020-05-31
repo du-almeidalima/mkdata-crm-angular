@@ -8,7 +8,8 @@ import {CustomerGroupService} from "../customer-group.service";
 import {customerGroupNameValidator} from "../customer-group-validators";
 import {Message} from "../../../../shared/message";
 import {CustomerGroup} from "../../../../shared/models/customer-group";
-import * as CustomerGroupActions from '../store/customer-group.actions'
+import * as CustomerGroupActions from '../store/customer-group.actions';
+import * as CustomerCommonActions from '../../store/common.actions';
 import * as fromCustomers from '../../store/index';
 
 @Component({
@@ -84,7 +85,7 @@ export class CustomerGroupEditComponent implements OnInit, OnDestroy {
 
   // Actions
   public onDismissMessage(): void {
-    this.store.dispatch(CustomerGroupActions.dismissMessage());
+    this.store.dispatch(CustomerCommonActions.dismissMessage());
   }
 
   public onSubmit(): void {

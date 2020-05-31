@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {Customer} from "../../../../shared/models/customer";
 import {Message} from "../../../../shared/message";
 import * as CustomerActions from "../store/customer.actions";
+import * as CustomerCommonActions from '../../store/common.actions';
 import * as fromCustomers from '../../store/index';
 
 @Component({
@@ -29,10 +30,10 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.storeSub = this.store.pipe( select(fromCustomers.getCustomerState) )
-      .subscribe( customerState => {
-        this.customer = customerState.current;
-        this.message = customerState.message;
+    this.storeSub = this.store.pipe( select(fromCustomers.getFeatureRootState) )
+      .subscribe( customersState => {
+        this.customer = customersState.customer.current;
+        this.message = customersState.common.message;
       })
   }
 
@@ -40,6 +41,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     if (this.storeSub) {
       this.storeSub.unsubscribe();
     }
+    this.store.dispatch(CustomerCommonActions.dismissMessage());
   }
 
   onEditUser(): void {
@@ -53,6 +55,6 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   }
 
   onDismissMessage() {
-    this.store.dispatch(CustomerActions.dismissMessage());
+    this.store.dispatch(CustomerCommonActions.dismissMessage());
   }
 }

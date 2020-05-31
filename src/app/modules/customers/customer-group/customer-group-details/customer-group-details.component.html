@@ -2,11 +2,11 @@
   <!-- Message -->
   <ngb-alert *ngIf="message" [type]="message.severity" (close)="onDismissMessage()">{{ message.content }}</ngb-alert>
   <!-- Customer Group Actions -->
-  <div class="app-customer-details-actions">
+  <div class="app-customer-details-actions"  *ngIf="customerGroup">
     <button class="text-warning" mat-icon-button (click)="onEditUser()">
       <mat-icon fontSet="fa" fontIcon="fa-user-edit"></mat-icon>
     </button>
-    <button class="text-danger" mat-icon-button (click)="onEditUser()">
+    <button class="text-danger" mat-icon-button (click)="onDeleteUser()">
       <mat-icon fontSet="fa" fontIcon="fa-user-minus"></mat-icon>
     </button>
   </div>

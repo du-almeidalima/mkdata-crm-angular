@@ -14,6 +14,7 @@ import {CustomerResponse} from "../../../../shared/models/api/customer-response"
 import {CustomerGroupResponse} from "../../../../shared/models/api/customer-group-response";
 import {environment as env} from "../../../../../environments/environment";
 import * as fromCustomers from '../../store/index';
+import * as CustomerCommonActions from '../../store/common.actions';
 import * as CustomerActions from './customer.actions';
 
 @Injectable()
@@ -114,6 +115,6 @@ export class CustomerEffect {
       default:
         message = 'Houve um erro durante sua requisição, por favor, reporte essa mensagem.'
     }
-    return of(CustomerActions.customerError( { payload: {severity: Severity.DANGER, content: message} }))
+    return of(CustomerCommonActions.setMessage( { payload: {severity: Severity.DANGER, content: message} }))
   }
 }

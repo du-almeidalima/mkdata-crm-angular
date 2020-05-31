@@ -19,8 +19,6 @@ const initialState: CustomerGroupState = {
 const customerReducerCreator = createReducer(initialState,
   on(CustomerGroupActions.setCustomerGroups, (state, props) => ({ ...state, customerGroups: props.payload })),
   on(CustomerGroupActions.setCustomerGroup, (state, props) => ({ ...state, current: props.payload })),
-  on(CustomerGroupActions.customerGroupError, (state, props) => ({ ...state, message: props.payload })),
-  on(CustomerGroupActions.dismissMessage, state => ({ ...state, message: null })),
 );
 
 export function customerGroupReducer(state: CustomerGroupState | undefined, action: Action) {

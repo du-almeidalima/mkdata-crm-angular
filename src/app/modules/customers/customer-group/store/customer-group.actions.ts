@@ -1,6 +1,5 @@
 import {createAction, props} from "@ngrx/store";
 import {CustomerGroup} from "../../../../shared/models/customer-group";
-import {Message} from "../../../../shared/message";
 
 export enum CustomerGroupActionTypes {
   FetchCustomerGroups = '[Customer Group] Fetch Customer Groups',
@@ -10,8 +9,6 @@ export enum CustomerGroupActionTypes {
   CreateCustomerGroup = '[Customer Group] Create Customer Group',
   DeleteCustomerGroup = '[Customer Group] Delete Customer Group',
   UpdateCustomerGroup = '[Customer Group] Update Customer Group',
-  CustomerGroupError = '[Customer Group] Customer Group Error',
-  DismissMessage = '[Customer Group] Dismiss Message'
 }
 
 // Customer Group Actions
@@ -47,13 +44,4 @@ export const deleteCustomerGroup = createAction(
 export const updateCustomerGroup = createAction(
   CustomerGroupActionTypes.UpdateCustomerGroup,
   props<{ payload: CustomerGroup }>()
-);
-
-export const customerGroupError = createAction(
-  CustomerGroupActionTypes.CustomerGroupError,
-  props<{ payload: Message }>()
-);
-
-export const dismissMessage = createAction(
-  CustomerGroupActionTypes.DismissMessage
 );
