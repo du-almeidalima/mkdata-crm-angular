@@ -4,7 +4,7 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Store} from "@ngrx/store";
 import {Actions, Effect, ofType} from "@ngrx/effects";
 import {of} from "rxjs";
-import {catchError, map, switchMap, tap} from "rxjs/operators";
+import {catchError, map, switchMap} from "rxjs/operators";
 
 import {Severity} from "../../../../shared/models/enum/severity";
 import {CustomerGroupsResponse} from "../../../../shared/models/api/customer-groups-response";
@@ -49,7 +49,7 @@ export class CustomerGroupEffect {
       return this.http.get<CustomerGroupResponse>(`${this.CUSTOMER_GROUP_URL}/${props.payload}`)
         .pipe(
           map(resp => {
-            return this.handleCustomerGroupGetSuccess(resp, props.redirect);
+            return this.handleCustomerGroupGetSuccess(resp);
           }),
           catchError(errResp => {
             return this.handleCustomerGroupError(errResp);
@@ -58,7 +58,7 @@ export class CustomerGroupEffect {
     })
   );
 
-  @Effect()
+  @Effect( { dispatch: false } )
   createCustomerGroup = this.actions$.pipe(
     ofType(CustomerGroupActions.createCustomerGroup),
     switchMap(props  => {
@@ -74,7 +74,7 @@ export class CustomerGroupEffect {
     })
   )
 
-  @Effect()
+  @Effect( { dispatch: false } )
   updateCustomerGroup = this.actions$.pipe(
     ofType(CustomerGroupActions.updateCustomerGroup),
     switchMap(props  => {
@@ -90,24 +90,14 @@ export class CustomerGroupEffect {
     })
   )
 
-  @Effect({ dispatch: false })
-  setCustomerGroup = this.actions$.pipe(
-    ofType(CustomerGroupActions.setCustomerGroup),
-    tap((props) => {
-      if (props.redirect) {
-        this.router.navigate(['/clientes','grupo', props.payload.id])
-      }
-    })
-  );
-
   // Handlers
   handleCustomerGroupPostPutSuccess(customerGroupResp: CustomerGroupResponse) {
-    return CustomerGroupActions.fetchCustomerGroup({ payload: customerGroupResp.id, redirect: true })
+    this.router.navigate(['/clientes','grupo', customerGroupResp.id])
   }
 
-  handleCustomerGroupGetSuccess(customerGroupResp: CustomerGroupResponse, redirect: boolean) {
+  handleCustomerGroupGetSuccess(customerGroupResp: CustomerGroupResponse) {
     const customerGroup: CustomerGroup = customerGroupResp as CustomerGroup;
-    return CustomerGroupActions.setCustomerGroup({ payload: customerGroup, redirect })
+    return CustomerGroupActions.setCustomerGroup({ payload: customerGroup })
   }
 
   handleCustomerGroupsGetSuccess(customerGroupsResp: CustomerGroupsResponse) {

@@ -21,7 +21,7 @@ export const fetchCustomerGroups = createAction(
 
 export const fetchCustomerGroup = createAction(
   CustomerGroupActionTypes.FetchCustomerGroup,
-  props<{ payload: number, redirect: boolean }>()
+  props<{ payload: number }>()
 );
 
 export const setCustomerGroups = createAction(
@@ -31,7 +31,7 @@ export const setCustomerGroups = createAction(
 
 export const setCustomerGroup = createAction(
   CustomerGroupActionTypes.SetCustomerGroup,
-  props<{ payload: CustomerGroup, redirect: boolean }>()
+  props<{ payload: CustomerGroup }>()
 );
 
 export const createCustomerGroup = createAction(

@@ -23,7 +23,7 @@ export class CustomerGroupResolver implements Resolve<CustomerGroup>{
     Observable<CustomerGroup> | Promise<CustomerGroup> | CustomerGroup {
 
     const id = route.params?.id;
-    this.store.dispatch(CustomerGroupActions.fetchCustomerGroup({ payload: id, redirect: false }));
+    this.store.dispatch(CustomerGroupActions.fetchCustomerGroup({ payload: id }));
 
     return this.actions$.pipe(
       take(1),

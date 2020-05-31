@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {Router} from "@angular/router";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {forkJoin, of} from "rxjs";
-import {catchError, exhaustMap, map, switchMap, tap} from "rxjs/operators";
+import {catchError, exhaustMap, map, switchMap} from "rxjs/operators";
 import {Actions, Effect, ofType} from "@ngrx/effects";
 import {Store} from "@ngrx/store";
 
@@ -42,7 +42,7 @@ export class CustomerEffect {
       return forkJoin(resp)
       .pipe(
         map(resp => {
-          return this.handleCustomerGetSuccess(resp, props.redirect);
+          return this.handleCustomerGetSuccess(resp);
         }),
         catchError( errResp => {
           return this.handleCustomerError(errResp);
@@ -51,7 +51,7 @@ export class CustomerEffect {
     })
   );
 
-  @Effect()
+  @Effect({ dispatch: false })
   createCustomer = this.actions$.pipe(
     ofType(CustomerActions.createCustomer),
     switchMap(props  => {
@@ -68,7 +68,7 @@ export class CustomerEffect {
     })
   );
 
-  @Effect()
+  @Effect( { dispatch: false } )
   updateCustomer = this.actions$.pipe(
     ofType(CustomerActions.updateCustomer),
     switchMap(props  => {
@@ -84,29 +84,18 @@ export class CustomerEffect {
         )
     })
   );
-
-  @Effect({dispatch: false})
-  setCustomer = this.actions$.pipe(
-    ofType(CustomerActions.setCustomer),
-    tap(props => {
-      if (props.redirect) {
-        this.router.navigate(['/clientes','cliente', props.payload.id])
-      }
-    })
-  );
-
   // Handlers
   handleCustomerPostPutSuccess(customerResp: CustomerResponse) {
-    return CustomerActions.fetchCustomer({ payload: customerResp.id, redirect: true });
+    this.router.navigate(['/clientes','cliente', customerResp.id]);
   }
 
-  handleCustomerGetSuccess(resp:{ customer: CustomerResponse, customerGroup: CustomerGroupResponse }, redirect: boolean) {
+  handleCustomerGetSuccess(resp:{ customer: CustomerResponse, customerGroup: CustomerGroupResponse }) {
     const customer: Customer = {
       ...resp.customer,
       customerGroup: (resp.customerGroup as CustomerGroup),
       registerDate: +resp.customer.registerDate
     }
-    return CustomerActions.setCustomer({ payload: customer, redirect });
+    return CustomerActions.setCustomer({ payload: customer});
   }
 
   handleCustomerError(errResp: HttpErrorResponse) {

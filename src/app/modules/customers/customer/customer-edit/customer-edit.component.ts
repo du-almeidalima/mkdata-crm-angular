@@ -132,8 +132,8 @@ export class CustomerEditComponent implements OnInit, OnDestroy, AfterViewChecke
       ])
     })
 
-    this.customerForm.get('type').valueChanges.subscribe(v => {
-      if (v === Person.FISICA) {
+    this.customerForm.get('type').valueChanges.subscribe(value => {
+      if (value === Person.FISICA) {
         this.cpfCnpjTitle = 'CPF';
         this.rgIeTitle = 'RG';
       } else {

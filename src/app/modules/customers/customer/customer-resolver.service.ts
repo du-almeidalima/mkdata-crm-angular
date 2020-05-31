@@ -22,7 +22,7 @@ export class CustomerResolver implements Resolve<Customer>{
     Observable<Customer> | Promise<Customer> | Customer {
 
     const id = route.params?.id;
-    this.store.dispatch(CustomerActions.fetchCustomer({ payload: id, redirect: false }));
+    this.store.dispatch(CustomerActions.fetchCustomer({ payload: id } ));
 
     return this.actions$.pipe(
       take(1),
