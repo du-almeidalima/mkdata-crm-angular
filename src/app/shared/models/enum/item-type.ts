@@ -1,0 +1,4 @@
+export enum ItemType {
+  CUSTOMER = 'CUSTOMER',
+  CUSTOMER_GROUP = 'CUSTOMER_GROUP'
+}

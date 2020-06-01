@@ -1,1 +1,19 @@
-<p>search-result works!</p>
+<section>
+  <div *ngIf="searchResult?.customers?.length > 0">
+    <h3>Clientes</h3>
+    <div class="list-group">
+      <app-search-result-item *ngFor="let item of searchResult.customers"
+                              [item]="getSearchResultItem(item, item.itemType)">
+      </app-search-result-item>
+    </div>
+  </div>
+
+  <div class="mt-4" *ngIf="searchResult?.customerGroups?.length > 0">
+    <h3>Grupo de Clientes</h3>
+    <div class="list-group">
+      <app-search-result-item *ngFor="let item of searchResult.customerGroups"
+                              [item]="getSearchResultItem(item, item.itemType)">
+      </app-search-result-item>
+    </div>
+  </div>
+</section>

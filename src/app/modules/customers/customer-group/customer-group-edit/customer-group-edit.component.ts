@@ -46,12 +46,12 @@ export class CustomerGroupEditComponent implements OnInit, OnDestroy {
     // Verificando se existe um id na rota, que indica que é uma edição
     this.isEditMode = !!this.route.snapshot.params.id;
 
-    this.storeSub = this.store.pipe( select(fromCustomers.getCustomerGroupState))
-      .subscribe(customerGroupState => {
-        this.message = customerGroupState.message;
+    this.storeSub = this.store.pipe( select(fromCustomers.getFeatureRootState))
+      .subscribe(customersState => {
+        this.message = customersState.common.message;
 
         if (this.isEditMode) {
-          const currentCustomerGroup = customerGroupState.current;
+          const currentCustomerGroup = customersState.customerGroup.current;
           // Atualizando o form com os valores CustomerGroup
           this.customerGroupForm.patchValue({
             name: currentCustomerGroup?.name,

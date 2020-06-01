@@ -5,8 +5,17 @@
       <ngb-alert *ngIf="message" [type]="message.severity" (close)="onDismissMessage()">{{ message.content }}</ngb-alert>
 
       <app-search-input></app-search-input>
-      <hr class="mx-3">
-      <app-search-result></app-search-result>
+
+      <ng-container *ngIf="isResultsAvailable; then searchResult; else noResult "></ng-container>
+
+      <ng-template #searchResult>
+        <hr class="mx-3">
+        <app-search-result></app-search-result>
+      </ng-template>
+
+      <ng-template #noResult>
+        <p>Nenhum resultado por enquanto</p>
+      </ng-template>
     </section>
   </div>
 </div>

@@ -98,6 +98,13 @@ esse tipo de transação, o Util CustomerMapper foi criado.
 
 Um Async Validator foi criado tanto para Customer quanto para o CustomerGroup a fim de ver se os campos chaves são únicos.
 
+### Step 4: Busca
+
+A funcionalidade de busca está contida no Customer Module como `Search`. Esse component tem seu próprio estado, assim como `Customer`e
+`CustomerGroup` e guard o resultado das buscas nele. A Busca é realizada de modo que, nenhum campo é obrigatório e sua pesquisa é 
+case insensitive. Quando uma busca é feita, a ação "startSearch" é disparada, fazendo uma requisição tanto para o endpoint de `Customer`
+quanto de `CustomerGroup`, esses valores são combinados com o `forkJoin` e atribuídos ao estado do componente `Search`.
+
 ## Ferramentas
 
 * **[Angular](https://angular.io/)** - 9.1.6

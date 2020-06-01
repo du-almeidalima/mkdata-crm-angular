@@ -30,6 +30,7 @@ import { SearchInputComponent } from './search/search-input/search-input.compone
 import { SearchResultComponent } from './search/search-result/search-result.component';
 import * as fromCustomers from './store';
 import {MatDividerModule} from "@angular/material/divider";
+import { SearchResultItemComponent } from './search/search-result/search-result-item/search-result-item.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import {MatDividerModule} from "@angular/material/divider";
     CustomerGroupDetailsComponent,
     CustomerGroupEditComponent,
     SearchInputComponent,
-    SearchResultComponent],
+    SearchResultComponent,
+    SearchResultItemComponent],
   imports: [
     CommonModule,
     CustomersRoutesModule,

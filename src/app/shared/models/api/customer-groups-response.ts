@@ -1,23 +1,9 @@
 import {Page} from "./page";
+import {CustomerGroupResponse} from "./customer-group-response";
 
 export interface CustomerGroupsResponse {
   _embedded: {
-    customerGroups: {
-      id: number;
-      name: string;
-      status: boolean;
-      _links: {
-        self: {
-          href: string;
-        },
-        customer: {
-          href: string;
-        },
-        customerGroup: {
-          href: string;
-        }
-      };
-    }[];
+    customerGroups: CustomerGroupResponse[]
   };
   page: Page;
 }

@@ -13,13 +13,17 @@ import * as CustomerCommonActions from "../store/common.actions";
 export class SearchComponent implements OnInit {
   private storeSub: Subscription;
   public message: Message;
+  public isResultsAvailable = false;
 
   constructor(private store: Store) { }
 
   ngOnInit(): void {
     this.storeSub = this.store.pipe( select(fromCustomers.getCustomerFeatureState) )
       .subscribe( customerState => {
-        this.message = customerState.common.message
+        this.message = customerState.common.message;
+        this.isResultsAvailable =
+          customerState.search.searchResult?.customers?.length > 0 ||
+          customerState.search.searchResult?.customerGroups?.length > 0
       });
   }
 

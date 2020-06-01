@@ -1,0 +1,14 @@
+<li class="list-group-item list-group-item-action d-flex justify-content-between mb-2">
+    <div class="app-search-result-item-title pointer" (click)="onItemClick()">
+      <strong>{{this.item.name}}</strong>
+      <span class="ml-3">{{this.item.status ? 'Ativo' : 'Inativo'}}</span>
+    </div>
+  <div>
+    <button class="text-warning" mat-icon-button [routerLink]="link + '/edit'">
+      <mat-icon fontSet="fa" fontIcon="fa-user-edit"></mat-icon>
+    </button>
+    <button class="text-danger ml-2" mat-icon-button (click)="onDeleteUser()">
+      <mat-icon fontSet="fa" fontIcon="fa-user-minus"></mat-icon>
+    </button>
+  </div>
+</li>

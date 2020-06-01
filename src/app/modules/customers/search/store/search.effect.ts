@@ -14,6 +14,7 @@ import {SearchResult} from "../../../../shared/models/search-result";
 import * as CustomerCommonActions from '../../store/common.actions';
 import * as SearchActions from './search.actions';
 import * as fromCustomers from '../../store/index';
+import {ItemType} from "../../../../shared/models/enum/item-type";
 
 @Injectable()
 export class SearchEffect {
@@ -59,9 +60,18 @@ export class SearchEffect {
 
   // Handlers
   handleSearchSuccess(resp: {customersResp: CustomersResponse, customerGroupsResp: CustomerGroupsResponse}) {
+    const customers = resp.customersResp._embedded.customers.map( c => {
+      c.itemType = ItemType.CUSTOMER;
+      return c;
+    });
+    const customerGroups = resp.customerGroupsResp._embedded.customerGroups.map( cg => {
+      cg.itemType = ItemType.CUSTOMER_GROUP;
+      return cg;
+    });
+
     const searchResult: SearchResult = {
-      customers: resp.customersResp._embedded.customers,
-      customerGroups: resp.customerGroupsResp._embedded.customerGroups
+      customers,
+      customerGroups
     }
 
     return SearchActions.setSearchResult({ payload: searchResult});

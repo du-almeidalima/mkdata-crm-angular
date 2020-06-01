@@ -25,6 +25,5 @@ export const setSearchResult = createAction(
 );
 
 export const clearSearchResult = createAction(
-  SearchActionsTypes.ClearSearchResult,
-  props<{ payload: number }>()
+  SearchActionsTypes.ClearSearchResult
 );
