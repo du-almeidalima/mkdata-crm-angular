@@ -11,7 +11,7 @@ export enum SearchActionsTypes {
 // Customer Actions
 export const startSearch = createAction(
   SearchActionsTypes.StartSearch,
-  props<{ payload: string }>()
+  props<{ payload: {term: string, status: boolean} }>()
 );
 
 export const searchFail = createAction(

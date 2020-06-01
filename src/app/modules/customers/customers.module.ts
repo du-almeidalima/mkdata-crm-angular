@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {StoreModule} from "@ngrx/store";
 import {EffectsModule} from "@ngrx/effects";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
@@ -29,6 +29,7 @@ import { CustomerGroupEditComponent } from './customer-group/customer-group-edit
 import { SearchInputComponent } from './search/search-input/search-input.component';
 import { SearchResultComponent } from './search/search-result/search-result.component';
 import * as fromCustomers from './store';
+import {MatDividerModule} from "@angular/material/divider";
 
 
 @NgModule({
@@ -60,7 +61,9 @@ import * as fromCustomers from './store';
     MatCheckboxModule,
     MatButtonModule,
     MatSlideToggleModule,
-    NgbAlertModule
+    NgbAlertModule,
+    FormsModule,
+    MatDividerModule
   ]
 })
 export class CustomersModule { }

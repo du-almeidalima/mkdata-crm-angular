@@ -1,1 +1,28 @@
-
+<form #f="ngForm" (ngSubmit)="onSubmit(f)">
+  <div class="row">
+    <div class="col-8 col-md-7">
+      <mat-form-field appearance="standard" class="w-100">
+        <mat-label>Nome do Cliente ou Grupo de Clientes</mat-label>
+        <input name="term" ngModel matInput>
+      </mat-form-field>
+    </div>
+    <div class="col-4 col-md-3">
+      <mat-form-field class="d-block" style="top: 12px">
+        <mat-label>Status</mat-label>
+        <mat-select name="status" ngModel [value]="true">
+          <mat-option [value]="true">
+            Ativo
+          </mat-option>
+          <mat-option [value]="false">
+            Inativo
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-2 mt-3">
+      <button mat-flat-button class="btn-block" color="primary" type="submit">
+        <mat-icon fontSet="fa" fontIcon="fa-search"></mat-icon>
+      </button>
+    </div>
+  </div>
+</form>
