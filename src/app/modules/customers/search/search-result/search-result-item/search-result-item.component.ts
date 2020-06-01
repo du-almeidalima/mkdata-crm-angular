@@ -8,6 +8,7 @@ import {SearchResultItem} from "../../../../../shared/models/search-result-item"
 import {ItemType} from "../../../../../shared/models/enum/item-type";
 import * as CustomerGroupActions from "../../../customer-group/store/customer-group.actions";
 import * as CustomerActions from "../../../customer/store/customer.actions";
+import * as SearchActions from "../../store/search.actions";
 import * as fromCustomers from "../../../store";
 
 @Component({
@@ -54,6 +55,8 @@ export class SearchResultItemComponent {
             break;
         }
       }
+
+      this.store.dispatch( SearchActions.refreshSearchResults());
     });
   }
 

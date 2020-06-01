@@ -3,8 +3,8 @@ import {SearchResult} from "../../../../shared/models/search-result";
 
 export enum SearchActionsTypes {
   StartSearch = '[Search] Start Search',
-  SearchFail = '[Search] Search Fail',
   SetSearchResult = '[Search] Set Search Result',
+  RefreshSearchResults = '[Search] Refresh Results',
   ClearSearchResult = '[Search] Clear Search Result'
 }
 
@@ -14,14 +14,13 @@ export const startSearch = createAction(
   props<{ payload: {term: string, status: boolean} }>()
 );
 
-export const searchFail = createAction(
-  SearchActionsTypes.SearchFail,
-  props<{ }>()
-);
-
 export const setSearchResult = createAction(
   SearchActionsTypes.SetSearchResult,
   props<{ payload: SearchResult }>()
+);
+
+export const refreshSearchResults = createAction(
+  SearchActionsTypes.RefreshSearchResults
 );
 
 export const clearSearchResult = createAction(

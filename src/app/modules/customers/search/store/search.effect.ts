@@ -2,9 +2,9 @@ import {Injectable} from "@angular/core";
 import {Router} from "@angular/router";
 import {HttpClient, HttpErrorResponse, HttpParams} from "@angular/common/http";
 import {forkJoin, of} from "rxjs";
-import {catchError, map, switchMap} from "rxjs/operators";
+import {catchError, map, switchMap, withLatestFrom} from "rxjs/operators";
 import {Actions, Effect, ofType} from "@ngrx/effects";
-import {Store} from "@ngrx/store";
+import {select, Store} from "@ngrx/store";
 
 import {Severity} from "../../../../shared/models/enum/severity";
 import {environment as env} from "../../../../../environments/environment";
@@ -55,6 +55,15 @@ export class SearchEffect {
           return this.handleSearchError(errResp);
         })
       )
+    })
+  );
+
+  @Effect()
+  refreshSearchResult = this.actions$.pipe(
+    ofType(SearchActions.refreshSearchResults),
+    withLatestFrom( this.store.pipe( select(fromCustomers.getSearchState) )),
+    switchMap(([actionData, searchState]) => {
+      return of( SearchActions.startSearch({ payload: searchState.lastSearch }))
     })
   );
 

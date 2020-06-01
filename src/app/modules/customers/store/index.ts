@@ -47,6 +47,11 @@ export const getCustomerGroupState = createSelector(
   state => state.customerGroup
 )
 
+export const getSearchState = createSelector(
+  getCustomerFeatureState,
+  state => state.search
+)
+
 export const getFeatureRootState= createSelector(
   getCustomerFeatureState,
   state => state
