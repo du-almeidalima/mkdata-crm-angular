@@ -1,4 +1,12 @@
-<!-- Message -->
-<ngb-alert *ngIf="message" [type]="message.severity" (close)="onDismissMessage()">{{ message.content }}</ngb-alert>
+<div class="row">
+  <div class="col-12 col-md-10 center-x">
+    <section class="white-container">
+      <!-- Message -->
+      <ngb-alert *ngIf="message" [type]="message.severity" (close)="onDismissMessage()">{{ message.content }}</ngb-alert>
 
-On Message Component
+      <app-search-input></app-search-input>
+
+      <app-search-result></app-search-result>
+    </section>
+  </div>
+</div>
