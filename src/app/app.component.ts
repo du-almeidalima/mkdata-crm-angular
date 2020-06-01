@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import { Store } from "@ngrx/store";
-import {Observable} from "rxjs";
-import {User} from "./shared/models/user";
-import {map} from "rxjs/operators";
+import { Store } from '@ngrx/store';
+import {Observable} from 'rxjs';
+import {User} from './shared/models/user';
+import {map} from 'rxjs/operators';
 import * as fromRoot from './store/app.state';
 import * as AuthActions from './core/auth/store/auth.actions';
 
@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     //  Ações iniciar a aplicação
-    this.user = this.store.select('auth').pipe( map(authState => authState.user) )
+    this.user = this.store.select('auth').pipe( map(authState => authState.user) );
     this.store.dispatch(AuthActions.autoLogin());
   }
 }

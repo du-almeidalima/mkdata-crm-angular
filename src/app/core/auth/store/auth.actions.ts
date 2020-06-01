@@ -1,5 +1,5 @@
 import {createAction, props} from '@ngrx/store';
-import {User} from "../../../shared/models/user";
+import {User} from '../../../shared/models/user';
 
 export enum AuthActionsTypes {
   StartAuthentication = '[Auth] Start Authentication',

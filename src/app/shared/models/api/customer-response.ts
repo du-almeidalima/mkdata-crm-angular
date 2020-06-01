@@ -1,4 +1,4 @@
-import {Customer} from "../customer";
+import {Customer} from '../customer';
 
 /** Interface que estende {@link Customer} e implementa os meta dados do HATEOAS na resposta da API */
 export interface CustomerResponse extends Customer {
@@ -12,5 +12,5 @@ export interface CustomerResponse extends Customer {
     customerGroup: {
       href: string;
     }
-  }
+  };
 }

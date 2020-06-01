@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {select, Store} from "@ngrx/store";
-import {Subscription} from "rxjs";
-import {Message} from "../../../shared/message";
-import * as fromCustomers from "../store/index";
-import * as CustomerCommonActions from "../store/common.actions";
+import {select, Store} from '@ngrx/store';
+import {Subscription} from 'rxjs';
+import {Message} from '../../../shared/message';
+import * as fromCustomers from '../store/index';
+import * as CustomerCommonActions from '../store/common.actions';
 
 @Component({
   selector: 'app-search',
@@ -23,7 +23,7 @@ export class SearchComponent implements OnInit {
         this.message = customerState.common.message;
         this.isResultsAvailable =
           customerState.search.searchResult?.customers?.length > 0 ||
-          customerState.search.searchResult?.customerGroups?.length > 0
+          customerState.search.searchResult?.customerGroups?.length > 0;
       });
   }
 

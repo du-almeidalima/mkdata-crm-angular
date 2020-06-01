@@ -1,16 +1,16 @@
-import {NgModule} from "@angular/core";
-import {RouterModule, Routes} from "@angular/router";
-import {CustomersComponent} from "./customers.component";
-import {AuthGuard} from "../../core/auth/auth.guard";
-import {SearchComponent} from "./search/search.component";
-import {CustomerGroupComponent} from "./customer-group/customer-group.component";
-import {CustomerEditComponent} from "./customer/customer-edit/customer-edit.component";
-import {CustomerDetailsComponent} from "./customer/customer-details/customer-details.component";
-import {CustomerGroupDetailsComponent} from "./customer-group/customer-group-details/customer-group-details.component";
-import {CustomerGroupEditComponent} from "./customer-group/customer-group-edit/customer-group-edit.component";
-import {CustomerGroupsResolver} from "./customer-group/customer-groups-resolver.service";
-import {CustomerGroupResolver} from "./customer-group/customer-group-resolver.service";
-import {CustomerResolver} from "./customer/customer-resolver.service";
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {CustomersComponent} from './customers.component';
+import {AuthGuard} from '../../core/auth/auth.guard';
+import {SearchComponent} from './search/search.component';
+import {CustomerGroupComponent} from './customer-group/customer-group.component';
+import {CustomerEditComponent} from './customer/customer-edit/customer-edit.component';
+import {CustomerDetailsComponent} from './customer/customer-details/customer-details.component';
+import {CustomerGroupDetailsComponent} from './customer-group/customer-group-details/customer-group-details.component';
+import {CustomerGroupEditComponent} from './customer-group/customer-group-edit/customer-group-edit.component';
+import {CustomerGroupsResolver} from './customer-group/customer-groups-resolver.service';
+import {CustomerGroupResolver} from './customer-group/customer-group-resolver.service';
+import {CustomerResolver} from './customer/customer-resolver.service';
 
 const CUSTOMERS_ROUTES: Routes = [
   { path: '', component: CustomersComponent, canActivate: [ AuthGuard ], children:

@@ -1,4 +1,4 @@
-import {Person} from "../enum/person";
+import {Person} from '../enum/person';
 
 /* Customer DTP seguindo Spring HATEOAS */
 export interface CustomerPost {

@@ -1,12 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {select, Store} from "@ngrx/store";
-import {Subscription} from "rxjs";
-import {SearchResultItem} from "../../../../shared/models/search-result-item";
-import {SearchResult} from "../../../../shared/models/search-result";
-import {Item} from "../../../../shared/models/item";
-import {ItemType} from "../../../../shared/models/enum/item-type";
-import * as SearchActions from "../store/search.actions";
-import * as fromCustomers from "../../store";
+import {select, Store} from '@ngrx/store';
+import {Subscription} from 'rxjs';
+import {SearchResultItem} from '../../../../shared/models/search-result-item';
+import {SearchResult} from '../../../../shared/models/search-result';
+import {Item} from '../../../../shared/models/item';
+import {ItemType} from '../../../../shared/models/enum/item-type';
+import * as SearchActions from '../store/search.actions';
+import * as fromCustomers from '../../store';
 
 @Component({
   selector: 'app-search-result',
@@ -21,13 +21,13 @@ export class SearchResultComponent implements OnInit, OnDestroy {
   };
 
   constructor(
-    private store: Store<fromCustomers.State>,) { }
+    private store: Store<fromCustomers.State>, ) { }
 
   ngOnInit(): void {
     this.storeSub = this.store.pipe( select(fromCustomers.getFeatureRootState) )
       .subscribe(customersState => {
         this.searchResult = customersState.search.searchResult;
-      })
+      });
   }
 
   ngOnDestroy(): void {
@@ -47,6 +47,6 @@ export class SearchResultComponent implements OnInit, OnDestroy {
       id: item.id,
       type: itemType,
       status: item.status
-    }
+    };
   }
 }

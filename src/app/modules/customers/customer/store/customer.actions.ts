@@ -1,5 +1,5 @@
-import {createAction, props} from "@ngrx/store";
-import {Customer} from "../../../../shared/models/customer";
+import {createAction, props} from '@ngrx/store';
+import {Customer} from '../../../../shared/models/customer';
 
 export enum CustomerActionTypes {
   FetchCustomer = '[Customer] Fetch Customer',

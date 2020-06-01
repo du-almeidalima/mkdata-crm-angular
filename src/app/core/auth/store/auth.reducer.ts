@@ -1,11 +1,11 @@
-import {Action, createReducer, on} from "@ngrx/store";
-import {User} from "../../../shared/models/user";
+import {Action, createReducer, on} from '@ngrx/store';
+import {User} from '../../../shared/models/user';
 import * as AuthActions from './auth.actions';
 
 export interface AuthState {
-  user: User,
-  feedbackMessage: string,
-  isLoading: boolean
+  user: User;
+  feedbackMessage: string;
+  isLoading: boolean;
 }
 
 const initialState: AuthState = {
@@ -17,7 +17,7 @@ const initialState: AuthState = {
 // Auth Reducers
 const authReducerCreator = createReducer(initialState,
   on(AuthActions.startAuthentication, state => ({ ...state, isLoading: true })),
-  on(AuthActions.authenticationSuccess, (state, props)=> ({
+  on(AuthActions.authenticationSuccess, (state, props) => ({
     ...state,
     user: props.user,
     isLoading: false })

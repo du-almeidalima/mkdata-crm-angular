@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Store} from "@ngrx/store";
+import {Store} from '@ngrx/store';
 import * as fromRoot from '../../../store/app.state';
 import * as AuthActions from '../../auth/store/auth.actions';
 
@@ -15,6 +15,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {}
 
   public onLogout(): void {
-    this.store.dispatch(AuthActions.logout())
+    this.store.dispatch(AuthActions.logout());
   }
 }

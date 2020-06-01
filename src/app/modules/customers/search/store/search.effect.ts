@@ -1,20 +1,20 @@
-import {Injectable} from "@angular/core";
-import {Router} from "@angular/router";
-import {HttpClient, HttpErrorResponse, HttpParams} from "@angular/common/http";
-import {forkJoin, of} from "rxjs";
-import {catchError, map, switchMap, withLatestFrom} from "rxjs/operators";
-import {Actions, Effect, ofType} from "@ngrx/effects";
-import {select, Store} from "@ngrx/store";
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
+import {forkJoin, of} from 'rxjs';
+import {catchError, map, switchMap, withLatestFrom} from 'rxjs/operators';
+import {Actions, Effect, ofType} from '@ngrx/effects';
+import {select, Store} from '@ngrx/store';
 
-import {Severity} from "../../../../shared/models/enum/severity";
-import {environment as env} from "../../../../../environments/environment";
-import {CustomersResponse} from "../../../../shared/models/api/customers-response";
-import {CustomerGroupsResponse} from "../../../../shared/models/api/customer-groups-response";
-import {SearchResult} from "../../../../shared/models/search-result";
+import {Severity} from '../../../../shared/models/enum/severity';
+import {ItemType} from '../../../../shared/models/enum/item-type';
+import {CustomersResponse} from '../../../../shared/models/api/customers-response';
+import {CustomerGroupsResponse} from '../../../../shared/models/api/customer-groups-response';
+import {SearchResult} from '../../../../shared/models/search-result';
+import {environment as env} from '../../../../../environments/environment';
 import * as CustomerCommonActions from '../../store/common.actions';
 import * as SearchActions from './search.actions';
 import * as fromCustomers from '../../store/index';
-import {ItemType} from "../../../../shared/models/enum/item-type";
 
 @Injectable()
 export class SearchEffect {
@@ -54,7 +54,7 @@ export class SearchEffect {
         catchError( errResp => {
           return this.handleSearchError(errResp);
         })
-      )
+      );
     })
   );
 
@@ -63,7 +63,7 @@ export class SearchEffect {
     ofType(SearchActions.refreshSearchResults),
     withLatestFrom( this.store.pipe( select(fromCustomers.getSearchState) )),
     switchMap(([actionData, searchState]) => {
-      return of( SearchActions.startSearch({ payload: searchState.lastSearch }))
+      return of( SearchActions.startSearch({ payload: searchState.lastSearch }));
     })
   );
 
@@ -81,7 +81,7 @@ export class SearchEffect {
     const searchResult: SearchResult = {
       customers,
       customerGroups
-    }
+    };
 
     return SearchActions.setSearchResult({ payload: searchResult});
   }
@@ -100,8 +100,8 @@ export class SearchEffect {
         message = 'Houve um erro no servidor, por favor tente mais tarde.';
         break;
       default:
-        message = 'Houve um erro durante sua requisição, por favor, reporte essa mensagem.'
+        message = 'Houve um erro durante sua requisição, por favor, reporte essa mensagem.';
     }
-    return of(CustomerCommonActions.setMessage( { payload: {severity: Severity.DANGER, content: message} }))
+    return of(CustomerCommonActions.setMessage( { payload: {severity: Severity.DANGER, content: message} }));
   }
 }

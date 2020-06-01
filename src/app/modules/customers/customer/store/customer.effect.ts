@@ -1,18 +1,18 @@
-import {Injectable} from "@angular/core";
-import {Router} from "@angular/router";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {forkJoin, of} from "rxjs";
-import {catchError, exhaustMap, map, switchMap} from "rxjs/operators";
-import {Actions, Effect, ofType} from "@ngrx/effects";
-import {Store} from "@ngrx/store";
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {forkJoin, of} from 'rxjs';
+import {catchError, exhaustMap, map, switchMap} from 'rxjs/operators';
+import {Actions, Effect, ofType} from '@ngrx/effects';
+import {Store} from '@ngrx/store';
 
-import {CustomersMapper} from "../../../../shared/utils/customers-mapper";
-import {Severity} from "../../../../shared/models/enum/severity";
-import {Customer} from "../../../../shared/models/customer";
-import {CustomerGroup} from "../../../../shared/models/customer-group";
-import {CustomerResponse} from "../../../../shared/models/api/customer-response";
-import {CustomerGroupResponse} from "../../../../shared/models/api/customer-group-response";
-import {environment as env} from "../../../../../environments/environment";
+import {CustomersMapper} from '../../../../shared/utils/customers-mapper';
+import {Severity} from '../../../../shared/models/enum/severity';
+import {Customer} from '../../../../shared/models/customer';
+import {CustomerGroup} from '../../../../shared/models/customer-group';
+import {CustomerResponse} from '../../../../shared/models/api/customer-response';
+import {CustomerGroupResponse} from '../../../../shared/models/api/customer-group-response';
+import {environment as env} from '../../../../../environments/environment';
 import * as fromCustomers from '../../store/index';
 import * as CustomerCommonActions from '../../store/common.actions';
 import * as CustomerActions from './customer.actions';
@@ -37,7 +37,7 @@ export class CustomerEffect {
       const customerResponse = this.http.get<CustomerResponse>(`${this.CUSTOMER_URL}/${props.payload}`);
       const customerGroupResponse = this.http
         .get<CustomerGroupResponse>(`${this.CUSTOMER_URL}/${props.payload}/customerGroup`)
-        .pipe( catchError(() => of(null)))
+        .pipe( catchError(() => of(null)));
 
       const resp = { customer: customerResponse, customerGroup: customerGroupResponse };
       return forkJoin(resp)
@@ -48,7 +48,7 @@ export class CustomerEffect {
         catchError( errResp => {
           return this.handleCustomerError(errResp);
         })
-      )
+      );
     })
   );
 
@@ -59,13 +59,13 @@ export class CustomerEffect {
       const customerPost = CustomersMapper.mapCustomerToCustomerPost(props.payload);
       return this.http.post<CustomerResponse>( this.CUSTOMER_URL, customerPost )
         .pipe(
-          map(resp => {
+          map((resp) => {
             return this.handleCustomerPostPutSuccess(resp);
           }),
           catchError((errResp: HttpErrorResponse) => {
             return this.handleCustomerError(errResp);
           })
-        )
+        );
     })
   );
 
@@ -82,7 +82,7 @@ export class CustomerEffect {
           catchError((errResp: HttpErrorResponse) => {
             return this.handleCustomerError(errResp);
           })
-        )
+        );
     })
   );
 
@@ -98,13 +98,13 @@ export class CustomerEffect {
           catchError((errResp: HttpErrorResponse) => {
             return this.handleCustomerError(errResp);
           })
-        )
+        );
     })
   );
 
   // Handlers
   handleCustomerPostPutSuccess(customerResp: CustomerResponse) {
-    this.router.navigate(['/clientes','cliente', customerResp.id]);
+    this.router.navigate(['/clientes', 'cliente', customerResp.id]);
   }
 
   handleCustomerGroupDeleteSuccess() {
@@ -114,12 +114,12 @@ export class CustomerEffect {
     return CustomerCommonActions.setMessage( { payload: {severity: Severity.SUCCESS, content: message} });
   }
 
-  handleCustomerGetSuccess(resp:{ customer: CustomerResponse, customerGroup: CustomerGroupResponse }) {
+  handleCustomerGetSuccess(resp: { customer: CustomerResponse, customerGroup: CustomerGroupResponse }) {
     const customer: Customer = {
       ...resp.customer,
       customerGroup: (resp.customerGroup as CustomerGroup),
       registerDate: +resp.customer.registerDate
-    }
+    };
     return CustomerActions.setCustomer({ payload: customer});
   }
 
@@ -137,8 +137,8 @@ export class CustomerEffect {
         message = 'Houve um erro no servidor, por favor tente mais tarde.';
         break;
       default:
-        message = 'Houve um erro durante sua requisição, por favor, reporte essa mensagem.'
+        message = 'Houve um erro durante sua requisição, por favor, reporte essa mensagem.';
     }
-    return of(CustomerCommonActions.setMessage( { payload: {severity: Severity.DANGER, content: message} }))
+    return of(CustomerCommonActions.setMessage( { payload: {severity: Severity.DANGER, content: message} }));
   }
 }

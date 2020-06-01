@@ -1,9 +1,9 @@
-import {Action, createReducer, on} from "@ngrx/store";
-import {Customer} from "../../../../shared/models/customer";
+import {Action, createReducer, on} from '@ngrx/store';
+import {Customer} from '../../../../shared/models/customer';
 import * as CustomerActions from './customer.actions';
 
 export interface CustomerState {
-  current: Customer
+  current: Customer;
 }
 
 const initialState: CustomerState = {

@@ -1,9 +1,9 @@
-import {Action, createReducer, on} from "@ngrx/store";
-import {Message} from "../../../shared/message";
+import {Action, createReducer, on} from '@ngrx/store';
+import {Message} from '../../../shared/message';
 import * as CommonActions from './common.actions';
 
 export interface CustomersCommonState {
-  message: Message
+  message: Message;
 }
 
 const initialState: CustomersCommonState = {

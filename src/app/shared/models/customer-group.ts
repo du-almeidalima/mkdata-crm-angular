@@ -1,4 +1,4 @@
-import {ItemType} from "./enum/item-type";
+import {ItemType} from './enum/item-type';
 
 export interface CustomerGroup {
   id?: number;

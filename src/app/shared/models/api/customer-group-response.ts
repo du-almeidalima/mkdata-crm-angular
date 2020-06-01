@@ -1,4 +1,4 @@
-import {CustomerGroup} from "../customer-group";
+import {CustomerGroup} from '../customer-group';
 
 export interface CustomerGroupResponse extends CustomerGroup {
   _links: {
@@ -11,5 +11,5 @@ export interface CustomerGroupResponse extends CustomerGroup {
     customers: {
       href: string;
     },
-  }
+  };
 }

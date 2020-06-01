@@ -1,10 +1,10 @@
-import {Action, createReducer, on} from "@ngrx/store";
-import {SearchResult} from "../../../../shared/models/search-result";
+import {Action, createReducer, on} from '@ngrx/store';
+import {SearchResult} from '../../../../shared/models/search-result';
 import * as SearchActions from './search.actions';
 
 export interface SearchState {
   searchResult: SearchResult;
-  lastSearch: { term: string, status: boolean }
+  lastSearch: { term: string, status: boolean };
 }
 
 const initialState: SearchState = {

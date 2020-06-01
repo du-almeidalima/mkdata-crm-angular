@@ -1,10 +1,10 @@
-import {Action, createReducer, on} from "@ngrx/store";
-import {CustomerGroup} from "../../../../shared/models/customer-group";
+import {Action, createReducer, on} from '@ngrx/store';
+import {CustomerGroup} from '../../../../shared/models/customer-group';
 import * as CustomerGroupActions from './customer-group.actions';
 
 export interface CustomerGroupState {
   customerGroups: CustomerGroup[];
-  current: CustomerGroup
+  current: CustomerGroup;
 }
 
 const initialState: CustomerGroupState = {

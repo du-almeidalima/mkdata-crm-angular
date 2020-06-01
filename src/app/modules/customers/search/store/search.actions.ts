@@ -1,5 +1,5 @@
-import {createAction, props} from "@ngrx/store";
-import {SearchResult} from "../../../../shared/models/search-result";
+import {createAction, props} from '@ngrx/store';
+import {SearchResult} from '../../../../shared/models/search-result';
 
 export enum SearchActionsTypes {
   StartSearch = '[Search] Start Search',

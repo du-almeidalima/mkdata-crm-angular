@@ -5,14 +5,14 @@ import {ActionReducer, StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import {storeLogger} from "ngrx-store-logger";
+import {storeLogger} from 'ngrx-store-logger';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {environment as env} from '../environments/environment';
-import {CoreModule} from "./core/core.module";
+import {CoreModule} from './core/core.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {CustomersModule} from "./modules/customers/customers.module";
-import {NgxMaskModule} from "ngx-mask";
+import {CustomersModule} from './modules/customers/customers.module';
+import {NgxMaskModule} from 'ngx-mask';
 
 // For Console Logging the State
 function logger(reducer: ActionReducer<any>): any {

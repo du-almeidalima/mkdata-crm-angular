@@ -1,5 +1,5 @@
-import {createAction, props} from "@ngrx/store";
-import {Message} from "../../../shared/message";
+import {createAction, props} from '@ngrx/store';
+import {Message} from '../../../shared/message';
 
 export enum CustomerCommonActionTypes {
   SetMessage = '[Customer Common] Set Message',

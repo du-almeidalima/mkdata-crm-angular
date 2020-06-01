@@ -1,5 +1,5 @@
-import {createAction, props} from "@ngrx/store";
-import {CustomerGroup} from "../../../../shared/models/customer-group";
+import {createAction, props} from '@ngrx/store';
+import {CustomerGroup} from '../../../../shared/models/customer-group';
 
 export enum CustomerGroupActionTypes {
   FetchCustomerGroups = '[Customer Group] Fetch Customer Groups',

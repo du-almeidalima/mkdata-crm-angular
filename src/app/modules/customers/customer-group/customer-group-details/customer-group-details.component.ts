@@ -1,14 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {select, Store} from "@ngrx/store";
-import {Router} from "@angular/router";
-import {Subscription} from "rxjs";
-import {MatDialog} from "@angular/material/dialog";
-import {ConfirmDialogComponent} from "../../../../shared/components/confirm-dialog/confirm-dialog.component";
-import {CustomerGroup} from "../../../../shared/models/customer-group";
-import {Message} from "../../../../shared/message";
+import {select, Store} from '@ngrx/store';
+import {Router} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {MatDialog} from '@angular/material/dialog';
+import {ConfirmDialogComponent} from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
+import {CustomerGroup} from '../../../../shared/models/customer-group';
+import {Message} from '../../../../shared/message';
 import * as CustomerCommonActions from '../../store/common.actions';
-import * as CustomerGroupActions from "../store/customer-group.actions";
-import * as fromCustomers from "../../store";
+import * as CustomerGroupActions from '../store/customer-group.actions';
+import * as fromCustomers from '../../store';
 
 @Component({
   selector: 'app-customer-group-details',
@@ -30,7 +30,7 @@ export class CustomerGroupDetailsComponent implements OnInit, OnDestroy {
       .subscribe(customersState => {
         this.customerGroup = customersState.customerGroup.current;
         this.message = customersState.common.message;
-      })
+      });
   }
 
   ngOnDestroy(): void {
@@ -40,7 +40,7 @@ export class CustomerGroupDetailsComponent implements OnInit, OnDestroy {
   }
 
   onEditUser(): void {
-    this.router.navigate(['/clientes','grupo',this.customerGroup.id,'edit'])
+    this.router.navigate(['/clientes', 'grupo', this.customerGroup.id, 'edit']);
   }
 
   onDeleteUser(): void {
@@ -48,7 +48,7 @@ export class CustomerGroupDetailsComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.store.dispatch(CustomerGroupActions.deleteCustomerGroup({ payload: this.customerGroup.id }))
+        this.store.dispatch(CustomerGroupActions.deleteCustomerGroup({ payload: this.customerGroup.id }));
       }
     });
   }

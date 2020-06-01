@@ -1,14 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {select, Store} from "@ngrx/store";
-import {Subscription} from "rxjs";
-import {Person} from "../../../../shared/models/enum/person";
-import {CustomerGroup} from "../../../../shared/models/customer-group";
-import {Customer} from "../../../../shared/models/customer";
-import {Message} from "../../../../shared/message";
-import {cpfCpnjAsyncValidator} from "../customer-validators";
-import {CustomerService} from "../customer.service";
+import {ActivatedRoute} from '@angular/router';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {select, Store} from '@ngrx/store';
+import {Subscription} from 'rxjs';
+import {Person} from '../../../../shared/models/enum/person';
+import {CustomerGroup} from '../../../../shared/models/customer-group';
+import {Customer} from '../../../../shared/models/customer';
+import {Message} from '../../../../shared/message';
+import {cpfCpnjAsyncValidator} from '../customer-validators';
+import {CustomerService} from '../customer.service';
 import * as CustomerActions from '../store/customer.actions';
 import * as CustomerCommonActions from '../../store/common.actions';
 import * as fromCustomers from '../../store/index';
@@ -33,11 +33,11 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
   }
 
   public get cpfCnpjFormControl(): FormControl {
-    return (this.customerForm.get('cpfCnpj') as FormControl)
+    return (this.customerForm.get('cpfCnpj') as FormControl);
   }
 
   public get cpfCnpjMask(): string {
-    return this.cpfCnpjTitle === 'CPF' ? '000.000.000-00' : '00.000.000/0000-00'
+    return this.cpfCnpjTitle === 'CPF' ? '000.000.000-00' : '00.000.000/0000-00';
   }
 
   public get rgIeMask(): string {
@@ -89,7 +89,7 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
             cpfCpnjAsyncValidator(this.customerService, '')
           );
         }
-    })
+    });
 
     // Recebendo o valor da ação disparada pelo CustomerGroupsResolver e atribuindo os grupos disponíveis no formulário
     this.store.pipe(select(fromCustomers.getCustomerGroupState))
@@ -125,7 +125,7 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
       phones: this.fb.array([
         this.fb.control('')
       ])
-    })
+    });
 
     this.customerForm.get('type').valueChanges.subscribe(value => {
       if (value === Person.FISICA) {
@@ -137,18 +137,18 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
       }
 
       this.customerForm.updateValueAndValidity();
-    })
+    });
   }
 
   // Actions
   public onAddPhone(): void {
     this.phoneControls.push(
       this.fb.control('')
-    )
+    );
   }
 
   public oneRemovePhone(index: number): void {
-    this.phoneControls.removeAt(index)
+    this.phoneControls.removeAt(index);
   }
 
   public onDismissMessage(): void {
@@ -161,13 +161,13 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
       phones: [...this.customerForm.value.phones],
       registerDate: new Date(this.customerForm.value.registerDate).getTime(),
       customerGroup: this.customerGroups[this.customerForm.value.customerGroup]
-    }
+    };
 
     if (this.isEditMode) {
       customer.id = this.route.snapshot.params.id;
-      this.store.dispatch(CustomerActions.updateCustomer({ payload: customer }))
+      this.store.dispatch(CustomerActions.updateCustomer({ payload: customer }));
     } else {
-      this.store.dispatch(CustomerActions.createCustomer({ payload: customer }))
+      this.store.dispatch(CustomerActions.createCustomer({ payload: customer }));
     }
   }
 }

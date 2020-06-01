@@ -1,14 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {select, Store} from "@ngrx/store";
-import {Subscription} from "rxjs";
-import {Router} from "@angular/router";
-import {Customer} from "../../../../shared/models/customer";
-import {Message} from "../../../../shared/message";
+import {select, Store} from '@ngrx/store';
+import {Subscription} from 'rxjs';
+import {Router} from '@angular/router';
+import {Customer} from '../../../../shared/models/customer';
+import {Message} from '../../../../shared/message';
 import * as CustomerCommonActions from '../../store/common.actions';
 import * as fromCustomers from '../../store/index';
-import * as CustomerActions from "../store/customer.actions";
-import {ConfirmDialogComponent} from "../../../../shared/components/confirm-dialog/confirm-dialog.component";
-import {MatDialog} from "@angular/material/dialog";
+import * as CustomerActions from '../store/customer.actions';
+import {ConfirmDialogComponent} from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-customer-details',
@@ -22,7 +22,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   private storeSub: Subscription;
 
   get registryDateParsed(): string {
-    return new Date(this.customer.registerDate).toLocaleString('pt-BR', { timeZone: 'UTC' })
+    return new Date(this.customer.registerDate).toLocaleString('pt-BR', { timeZone: 'UTC' });
   }
 
   constructor(
@@ -36,7 +36,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
       .subscribe( customersState => {
         this.customer = customersState.customer.current;
         this.message = customersState.common.message;
-      })
+      });
   }
 
   ngOnDestroy(): void {
@@ -46,7 +46,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   }
 
   onEditUser(): void {
-    this.router.navigate(['/clientes','cliente',this.customer.id,'edit'])
+    this.router.navigate(['/clientes', 'cliente', this.customer.id, 'edit']);
   }
 
   onDeleteUser(): void {
@@ -54,7 +54,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.store.dispatch(CustomerActions.deleteCustomer({ payload: this.customer.id }))
+        this.store.dispatch(CustomerActions.deleteCustomer({ payload: this.customer.id }));
       }
     });
   }

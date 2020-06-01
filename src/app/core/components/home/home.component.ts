@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Store} from "@ngrx/store";
-import {Subscription} from "rxjs";
-import {map} from "rxjs/operators";
-import {FeatureCard} from "../../../shared/components/feature-card/feature-cards.component";
+import {Store} from '@ngrx/store';
+import {Subscription} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {FeatureCard} from '../../../shared/components/feature-card/feature-cards.component';
 import * as fromRoot from '../../../store/app.state';
 
 @Component({
@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     .pipe( map(authState => authState.user.name) )
     .subscribe(name => {
       this.userName = name;
-    })
+    });
   }
 
   ngOnDestroy(): void {

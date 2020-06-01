@@ -1,16 +1,16 @@
-import {Injectable} from "@angular/core";
-import {Router} from "@angular/router";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {Store} from "@ngrx/store";
-import {Actions, Effect, ofType} from "@ngrx/effects";
-import {of} from "rxjs";
-import {catchError, map, switchMap} from "rxjs/operators";
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {Store} from '@ngrx/store';
+import {Actions, Effect, ofType} from '@ngrx/effects';
+import {of} from 'rxjs';
+import {catchError, map, switchMap} from 'rxjs/operators';
 
-import {Severity} from "../../../../shared/models/enum/severity";
-import {CustomerGroupsResponse} from "../../../../shared/models/api/customer-groups-response";
-import {CustomerGroup} from "../../../../shared/models/customer-group";
-import {CustomerGroupResponse} from "../../../../shared/models/api/customer-group-response";
-import {environment as env} from "../../../../../environments/environment";
+import {Severity} from '../../../../shared/models/enum/severity';
+import {CustomerGroupsResponse} from '../../../../shared/models/api/customer-groups-response';
+import {CustomerGroup} from '../../../../shared/models/customer-group';
+import {CustomerGroupResponse} from '../../../../shared/models/api/customer-group-response';
+import {environment as env} from '../../../../../environments/environment';
 import * as CustomerCommonActions from '../../store/common.actions';
 import * as CustomerGroupActions from './customer-group.actions';
 import * as fromCustomer from '../../store';
@@ -39,7 +39,7 @@ export class CustomerGroupEffect {
           catchError(errResp => {
             return this.handleCustomerGroupError(errResp);
           })
-        )
+        );
     })
   );
 
@@ -55,7 +55,7 @@ export class CustomerGroupEffect {
           catchError(errResp => {
             return this.handleCustomerGroupError(errResp);
           })
-        )
+        );
     })
   );
 
@@ -71,9 +71,9 @@ export class CustomerGroupEffect {
           catchError((errResp: HttpErrorResponse) => {
             return this.handleCustomerGroupError(errResp);
           })
-        )
+        );
     })
-  )
+  );
 
   @Effect( { dispatch: false } )
   updateCustomerGroup = this.actions$.pipe(
@@ -87,9 +87,9 @@ export class CustomerGroupEffect {
           catchError((errResp: HttpErrorResponse) => {
             return this.handleCustomerGroupError(errResp);
           })
-        )
+        );
     })
-  )
+  );
 
   @Effect()
   deleteCustomerGroup = this.actions$.pipe(
@@ -103,13 +103,13 @@ export class CustomerGroupEffect {
           catchError((errResp: HttpErrorResponse) => {
             return this.handleCustomerGroupError(errResp);
           })
-        )
+        );
     })
-  )
+  );
 
   // Handlers
   handleCustomerGroupPostPutSuccess(customerGroupResp: CustomerGroupResponse) {
-    this.router.navigate(['/clientes','grupo', customerGroupResp.id])
+    this.router.navigate(['/clientes', 'grupo', customerGroupResp.id]);
   }
 
   handleCustomerGroupDeleteSuccess() {
@@ -120,12 +120,12 @@ export class CustomerGroupEffect {
 
   handleCustomerGroupGetSuccess(customerGroupResp: CustomerGroupResponse) {
     const customerGroup: CustomerGroup = customerGroupResp as CustomerGroup;
-    return CustomerGroupActions.setCustomerGroup({ payload: customerGroup })
+    return CustomerGroupActions.setCustomerGroup({ payload: customerGroup });
   }
 
   handleCustomerGroupsGetSuccess(customerGroupsResp: CustomerGroupsResponse) {
     const customerGroups: CustomerGroup[] = customerGroupsResp._embedded.customerGroups;
-    return CustomerGroupActions.setCustomerGroups({ payload: customerGroups })
+    return CustomerGroupActions.setCustomerGroups({ payload: customerGroups });
   }
 
   handleCustomerGroupError(errResp: any) {
@@ -142,7 +142,7 @@ export class CustomerGroupEffect {
         message = 'Houve um erro no servidor, por favor tente mais tarde.';
         break;
       default:
-        message = 'Houve um erro durante sua requisição, por favor, reporte essa mensagem.'
+        message = 'Houve um erro durante sua requisição, por favor, reporte essa mensagem.';
     }
     return of(CustomerCommonActions.setMessage( { payload: {severity: Severity.DANGER, content: message} }));
   }

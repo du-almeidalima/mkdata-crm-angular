@@ -1,13 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {select, Store} from "@ngrx/store";
-import {Subscription} from "rxjs";
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {select, Store} from '@ngrx/store';
+import {Subscription} from 'rxjs';
 
-import {CustomerGroupService} from "../customer-group.service";
-import {customerGroupNameValidator} from "../customer-group-validators";
-import {Message} from "../../../../shared/message";
-import {CustomerGroup} from "../../../../shared/models/customer-group";
+import {CustomerGroupService} from '../customer-group.service';
+import {customerGroupNameValidator} from '../customer-group-validators';
+import {Message} from '../../../../shared/message';
+import {CustomerGroup} from '../../../../shared/models/customer-group';
 import * as CustomerGroupActions from '../store/customer-group.actions';
 import * as CustomerCommonActions from '../../store/common.actions';
 import * as fromCustomers from '../../store/index';
@@ -26,7 +26,7 @@ export class CustomerGroupEditComponent implements OnInit, OnDestroy {
 
   get nameFormControl(): FormControl  {
     return this.customerGroupForm.get('name') as FormControl;
-  };
+  }
 
   get isFormValid(): boolean {
     const { dirty, invalid, pending } = this.customerGroupForm;
@@ -65,7 +65,7 @@ export class CustomerGroupEditComponent implements OnInit, OnDestroy {
           this.customerGroupForm.get('name')
             .setAsyncValidators(customerGroupNameValidator(this.customerGroupService, ''));
         }
-      })
+      });
   }
 
   ngOnDestroy(): void {
@@ -80,7 +80,7 @@ export class CustomerGroupEditComponent implements OnInit, OnDestroy {
         validators: [Validators.required]
       }],
       status: [true]
-    })
+    });
   }
 
   // Actions

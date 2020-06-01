@@ -1,7 +1,7 @@
-import {AsyncValidatorFn} from "@angular/forms";
-import {of} from "rxjs";
-import {catchError, debounceTime, first, map, switchMap} from "rxjs/operators";
-import {CustomerGroupService} from "./customer-group.service";
+import {AsyncValidatorFn} from '@angular/forms';
+import {of} from 'rxjs';
+import {catchError, debounceTime, first, map, switchMap} from 'rxjs/operators';
+import {CustomerGroupService} from './customer-group.service';
 
 /**
  * Async Validator para verificar se existe um Customer Group com esse nome
@@ -25,6 +25,6 @@ export const customerGroupNameValidator = (customerGroupService: CustomerGroupSe
           return of(err.message);
         }),
         first()
-      )
-  }
+      );
+  };
 };

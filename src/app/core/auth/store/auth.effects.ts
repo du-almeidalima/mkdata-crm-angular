@@ -1,13 +1,15 @@
-import {Injectable} from "@angular/core";
-import {Router} from "@angular/router";
-import {Store} from "@ngrx/store";
-import {Actions, Effect, ofType} from "@ngrx/effects";
-import {map, switchMap, tap} from "rxjs/operators";
-import {Observable, of} from "rxjs";
-import {User} from "../../../shared/models/user";
-import {AuthService} from "../auth.service";
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {Store} from '@ngrx/store';
+import {Actions, Effect, ofType} from '@ngrx/effects';
+import {map, switchMap, tap} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
+import {User} from '../../../shared/models/user';
+import {AuthService} from '../auth.service';
 import * as fromRoot from '../../../store/app.state';
 import * as AuthActions from './auth.actions';
+
+//TODO Implementar JWT com SpringBoot
 
 @Injectable()
 export class AuthEffects {
@@ -20,8 +22,8 @@ export class AuthEffects {
 
   @Effect()
   startAuthentication = this.actions$.pipe(
-    ofType(AuthActions.AuthActionsTypes.StartAuthentication),
-    switchMap((props: { user: User, redirect: boolean }) => {
+    ofType(AuthActions.startAuthentication),
+    switchMap((props) => {
       // Faking HTTP
       return this.handleAuthenticationSuccess();
     })
@@ -29,8 +31,8 @@ export class AuthEffects {
 
   @Effect({dispatch: false})
   authSuccess = this.actions$.pipe(
-    ofType(AuthActions.AuthActionsTypes.AuthenticationSuccess),
-    tap((props: { user: User, redirect: boolean }) => {
+    ofType(AuthActions.authenticationSuccess),
+    tap((props) => {
       if (props.redirect) {
         this.router.navigate(['/home']);
       }
@@ -39,7 +41,7 @@ export class AuthEffects {
 
   @Effect({ dispatch: false })
   authLogout = this.actions$.pipe(
-    ofType(AuthActions.AuthActionsTypes.Logout),
+    ofType(AuthActions.logout),
     tap(() => {
       this.authService.removeUserLocalStorage();
       this.router.navigate(['/login']);
@@ -48,7 +50,7 @@ export class AuthEffects {
 
   @Effect()
   autoLogin = this.actions$.pipe(
-    ofType(AuthActions.AuthActionsTypes.AutoLogin),
+    ofType(AuthActions.autoLogin),
     map(() => {
       const restoredUser = this.authService.getUserLocalStorage();
       if (restoredUser){
@@ -61,14 +63,14 @@ export class AuthEffects {
           // Starting Session countdown
           this.authService.setUserLocalStorage(user, expirationDuration);
 
-          return AuthActions.authenticationSuccess({ user: user, redirect: false });
+          return AuthActions.authenticationSuccess({ user, redirect: false });
         } else {
-          console.info(`User token has expired.`);
-          return { type: 'NULL' }
+          console.log(`User token has expired.`);
+          return { type: 'NULL' };
         }
       } else {
-        console.info(`Couldn't find any user to auto login.`);
-        return { type: 'NULL' }
+        console.log(`Couldn't find any user to auto login.`);
+        return { type: 'NULL' };
       }
     })
   );

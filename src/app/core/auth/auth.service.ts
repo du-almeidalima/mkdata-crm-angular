@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Store} from "@ngrx/store";
-import {User} from "../../shared/models/user";
-import {environment as env} from "../../../environments/environment";
+import {Store} from '@ngrx/store';
+import {User} from '../../shared/models/user';
+import {environment as env} from '../../../environments/environment';
 import * as fromApp from '../../store/app.state';
 import * as AuthActions from './store/auth.actions';
 

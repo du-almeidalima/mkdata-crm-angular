@@ -1,7 +1,7 @@
-import {AsyncValidatorFn} from "@angular/forms";
-import {of} from "rxjs";
-import {catchError, debounceTime, first, map, switchMap} from "rxjs/operators";
-import {CustomerService} from "./customer.service";
+import {AsyncValidatorFn} from '@angular/forms';
+import {of} from 'rxjs';
+import {catchError, debounceTime, first, map, switchMap} from 'rxjs/operators';
+import {CustomerService} from './customer.service';
 
 /**
  * Async Validator para verificar se existe um usuário com o CPF/CNPJ provido
@@ -25,6 +25,6 @@ export const cpfCpnjAsyncValidator = (customerService: CustomerService, currentC
           return of(err.message);
         }),
         first()
-      )
-  }
+      );
+  };
 };
