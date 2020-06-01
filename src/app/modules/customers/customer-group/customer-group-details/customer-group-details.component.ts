@@ -37,9 +37,6 @@ export class CustomerGroupDetailsComponent implements OnInit, OnDestroy {
     if (this.storeSub) {
       this.storeSub.unsubscribe();
     }
-    if (this.message) {
-      this.store.dispatch(CustomerCommonActions.dismissMessage());
-    }
   }
 
   onEditUser(): void {

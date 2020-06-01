@@ -74,7 +74,7 @@ export class CustomerEffect {
     ofType(CustomerActions.updateCustomer),
     switchMap(props  => {
       const customerPost = CustomersMapper.mapCustomerToCustomerPost(props.payload);
-      return this.http.put<CustomerResponse>( `${this.CUSTOMER_URL}/${props.payload.id}`, customerPost )
+      return this.http.patch<CustomerResponse>( `${this.CUSTOMER_URL}/${props.payload.id}`, customerPost )
         .pipe(
           map(resp => {
             return this.handleCustomerPostPutSuccess(resp);
@@ -86,7 +86,7 @@ export class CustomerEffect {
     })
   );
 
-  @Effect( { dispatch: false } )
+  @Effect()
   deleteCustomer = this.actions$.pipe(
     ofType(CustomerActions.deleteCustomer),
     switchMap(props  => {
@@ -109,9 +109,9 @@ export class CustomerEffect {
 
   handleCustomerGroupDeleteSuccess() {
     const message = 'Cliente excluído com sucesso';
-    this.router.navigate(['/clientes']).then(() => {
-      CustomerCommonActions.setMessage( { payload: {severity: Severity.SUCCESS, content: message} });
-    })
+    this.router.navigate(['/clientes']);
+
+    return CustomerCommonActions.setMessage( { payload: {severity: Severity.SUCCESS, content: message} });
   }
 
   handleCustomerGetSuccess(resp:{ customer: CustomerResponse, customerGroup: CustomerGroupResponse }) {

@@ -79,7 +79,7 @@ export class CustomerGroupEffect {
   updateCustomerGroup = this.actions$.pipe(
     ofType(CustomerGroupActions.updateCustomerGroup),
     switchMap(props  => {
-      return this.http.put<CustomerGroupResponse>( `${this.CUSTOMER_GROUP_URL}/${props.payload.id}`, props.payload )
+      return this.http.patch<CustomerGroupResponse>( `${this.CUSTOMER_GROUP_URL}/${props.payload.id}`, props.payload )
         .pipe(
           map(resp => {
             return this.handleCustomerGroupPostPutSuccess(resp);
@@ -91,7 +91,7 @@ export class CustomerGroupEffect {
     })
   )
 
-  @Effect( { dispatch: false } )
+  @Effect()
   deleteCustomerGroup = this.actions$.pipe(
     ofType(CustomerGroupActions.deleteCustomerGroup),
     switchMap(props  => {
@@ -114,9 +114,8 @@ export class CustomerGroupEffect {
 
   handleCustomerGroupDeleteSuccess() {
     const message = 'Grupo de Clientes excluído com sucesso';
-    this.router.navigate(['/clientes']).then(() => {
-      CustomerCommonActions.setMessage( { payload: {severity: Severity.SUCCESS, content: message} });
-    })
+    this.router.navigate(['/clientes']);
+    return CustomerCommonActions.setMessage( { payload: {severity: Severity.SUCCESS, content: message} });
   }
 
   handleCustomerGroupGetSuccess(customerGroupResp: CustomerGroupResponse) {

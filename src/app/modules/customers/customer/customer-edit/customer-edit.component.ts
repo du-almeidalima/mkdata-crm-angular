@@ -62,13 +62,13 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
     // Verificando se existe um id na rota, que indica que é uma edição
     this.isEditMode = !!this.route.snapshot.params?.id;
 
-    this.storeSub = this.store.pipe( select(fromCustomers.getCustomerState) )
-      .subscribe( customerState => {
+    this.storeSub = this.store.pipe( select(fromCustomers.getFeatureRootState) )
+      .subscribe( customersState => {
 
-        this.message = customerState.message;
+        this.message = customersState.common.message;
 
         if (this.isEditMode) {
-          const currentCustomer = customerState.current;
+          const currentCustomer = customersState.customer.current;
           // Atualizando o form com os valores CustomerGroup
           this.customerForm.patchValue({
             name: currentCustomer?.name,
@@ -76,7 +76,7 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
             cpfCnpj: currentCustomer?.cpfCnpj,
             rgIe: currentCustomer?.rgIe,
             registerDate: new Date(currentCustomer?.registerDate),
-            customerGroup: currentCustomer?.customerGroup.id,
+            customerGroup: currentCustomer?.customerGroup?.id,
             status: currentCustomer?.status,
             phones: currentCustomer?.phones ? currentCustomer.phones : []
           });
